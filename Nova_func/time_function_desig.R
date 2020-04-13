@@ -144,12 +144,14 @@ periodo_trabalhado <- function(data_inicial, data_final, dias_mes, BD_desig ){
 
 
 #data inicial do mes de refer?ncia
-data_inicial <- ("01/02/2020")
-data_final <- dmy("29/02/2020")
-dias_mes <- 29
+# data_inicial <- ("01/02/2020")
+# data_final <- dmy("29/02/2020")
+# dias_mes <- 29
+# 
+# #o retor ser? em rela??o as dias trabalhados
+# com <-Sys.time()
+# oi <- periodo_trabalhado(data_inicial, data_final, dias_mes, BD_desig )
+# fim <- Sys.time()
+# fim-com
 
-#o retor ser? em rela??o as dias trabalhados
-com <-Sys.time()
-oi <- periodo_trabalhado(data_inicial, data_final, dias_mes, BD_desig )
-fim <- Sys.time()
-fim-com
+#write.xlsx(oi, "jobdays.xlsx")
