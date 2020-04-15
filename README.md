@@ -1,5 +1,5 @@
-# Gerando_passo4
-A pasta "Nova_func" contem três funções, em que juntas,calculam os dias trabalhados com restrição de feriados municipais.
+# Gerando_passos
+A pasta "Novo_passo4" contem três funções, em que juntas,calculam os dias trabalhados com restrição de feriados municipais.
 
 Em resumo:
 
