@@ -1,7 +1,7 @@
 #rm(list=ls())
 
 
-periodo_trabalhado_afastamento <- function(data_entrada, BD_afastamentos, BD_desig ){
+periodo_trabalhado_afastamento <- function(data_entrada, BD_afastamentos, BD_desig, dias_mes ){
   library(dplyr) #manipular os dados # nao deu
   library(stringr) # manipularstrings
   library(lubridate)
@@ -135,7 +135,8 @@ periodo_trabalhado_afastamento <- function(data_entrada, BD_afastamentos, BD_des
   }
   
   BD_afastamentos <- cbind(BD_afastamentos, tempo_trabalhado)
-  
+  BD_afastamentos$tempo_afastado <- dias_mes - BD_afastamentos$tempo_trabalhado 
+    
   # retirando os repetidos
   BD_afastamentos <- BD_afastamentos %>%  distinct(nome_magis, .keep_all = T)
   
@@ -143,8 +144,9 @@ periodo_trabalhado_afastamento <- function(data_entrada, BD_afastamentos, BD_des
 }# a fun??o est? entregando avisos
 
 
-#data_entrada <- "01/02/2020"
-#periodo_trabalhado_afastamento(data_entrada, BD_afastamentos, BD_desig)
+ # data_entrada <- "01/03/2020"
+ # dias_mes <- 31
+ # periodo_trabalhado_afastamento(data_entrada, BD_afastamentos, BD_desig, dias_mes)
 
 
 
