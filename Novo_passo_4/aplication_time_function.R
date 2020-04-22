@@ -12,7 +12,7 @@ periodo_trabalhado_afastamento <- function(data_entrada, BD_afastamentos, BD_des
   
   # fun??o que ja puxa os dados e cria o calend?rio para cara da linha
   #source("X:/SGE/GABINETE/CONSELHO NACIONAL DE JUSTICA/JUSTICA EM NUMEROS/JUSTI?A EM N?MEROS_DADOS ANUAIS/JN ANO 2020/Arquivos Provimento 49 de 18_08_2015/Quarto Passo/Gerar quarto passo/Nova fun??o/hollydays.R")
-  source("/home/silva/Downloads/romi_ofice/Gerar_passo_4/new_function/hollydays.R")
+  source("C:/Users/silva/Documents/Repositorio/Gerando_passos/Novo_passo_4/hollydays.R")
   # colocando as serventias para saber o municipio
   BD_afastamentos <- left_join(BD_afastamentos, BD_desig[,c(1,4)]) 
   BD_afastamentos <- BD_afastamentos  %>% distinct(nome_magis, inicio_afast, .keep_all = T)

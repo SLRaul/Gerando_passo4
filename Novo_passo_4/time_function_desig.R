@@ -1,9 +1,9 @@
-setwd("/home/silva/Downloads/romi_ofice")
+#setwd("/home/silva/Downloads/romi_ofice")
 
 periodo_trabalhado <- function(data_inicial, data_final, dias_mes, BD_desig ){
   # procurando a fun??o periodo_trabalhado_afastamento
   #source("X:/SGE/GABINETE/CONSELHO NACIONAL DE JUSTICA/JUSTICA EM NUMEROS/JUSTI?A EM N?MEROS_DADOS ANUAIS/JN ANO 2020/Arquivos Provimento 49 de 18_08_2015/Quarto Passo/Gerar quarto passo/Nova fun??o/aplication_time_function.R")
-  source("/home/silva/Downloads/romi_ofice/Gerar_passo_4/new_function/aplication_time_function.R")
+  source("C:/Users/silva/Documents/Repositorio/Gerando_passos/Novo_passo_4/aplication_time_function.R")
   #colocando o tempo trabalhado dos magistrados afastados
   BD_afastamentos <- periodo_trabalhado_afastamento(data_inicial, BD_afastamentos, BD_desig, dias_mes)
   
