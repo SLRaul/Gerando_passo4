@@ -289,8 +289,8 @@ dados2 = dados2 %>% select(Junção,nome_magis,nome_serventia_sicond,Junção,
 
 # Juntando ambos os bancos de dados
 Quarto_passo=rbind(dados1,dados2)
-#retirando os repetidos
 
+#retirando os repetidos
 Quarto_passo <- Quarto_passo %>% distinct(Junção, .keep_all = T)
 
 # preparando os dias trabalhados e código_tj
@@ -308,21 +308,21 @@ Quarto_passo <- left_join(Quarto_passo,info)
 # Colocando código 4 para todos os espaços com NA,
 Quarto_passo$codigo_TJ=ifelse(is.na(Quarto_passo$codigo_TJ),4,Quarto_passo$codigo_TJ)
 
+
+#colocando os dias de afastamentos e as observações
+Quarto_passo <- (left_join(Quarto_passo, lista$afastamento))
+
+#retirando os repetidos
+Quarto_passo <- Quarto_passo %>% distinct(Junção, .keep_all = T)
+
 Quarto_passo <- Quarto_passo %>% select(`CPF Magistrado`=CPF_magis,`Código Serventia`=codigo_VT,nome_magis,nome_serventia_sicond,
                                         `Tipo Juiz`=codigo_TJ,Mes,
                                         Ano,`Quantidade dias corridos`=dias_desig,
-                                        #`Dias de Afastamento`=dias_afast,Observação=Descrição,
+                                        `Dias de Afastamento`=tempo_afastado,Observação=Descrição,
                                         AudConc2º,AudNConc2º,Dec2º,DecDC2º,
                                         DecH2º,DecHDC2º,DecInt2º,RintJ2º,VotoR2º,AudConc1º,AudNConc1º,DecInt1º,RIntCJ1º,
                                         SentCCM1º,SentCH1º,SentCSM1º,SentDC1º,SentExH1º,SentExtFisc1º,SentExtNFisc1º,
                                         SentHDC1º,SentJud1º)
-# colocando o código para os desembargadores
-for (i in 1:nrow(Quarto_passo)) {
-  if(str_detect(Quarto_passo$nome_serventia_sicond[i],Quarto_passo$nome_magis[i] ) == TRUE)
-    Quarto_passo$`Tipo Juiz`[i] <- 6
-}
-
-
 # Criando função que converte um vetor de encoding qualquer para encoding latin1
 # sendo este necessário para vizualização correta no excel
 Converter_em_latin1=function(vetor){
@@ -339,10 +339,16 @@ Converter_em_latin1=function(vetor){
   return(a)
 }
 
+# colocando o código para os desembargadores
+for (i in 1:nrow(Quarto_passo)) {
+  if(str_detect(Quarto_passo$nome_serventia_sicond[i],Quarto_passo$nome_magis[i] ) == TRUE)
+    Quarto_passo$`Tipo Juiz`[i] <- 6
+}
+
 # Transformando colunas formadas por strings
 Quarto_passo$nome_serventia_sicond=Converter_em_latin1(Quarto_passo$nome_serventia_sicond)
 Quarto_passo$nome_magis=Converter_em_latin1(Quarto_passo$nome_magis)
-#Quarto_passo$Observação=Converter_em_latin1(Quarto_passo$Observação)
+Quarto_passo$Observação=Converter_em_latin1(Quarto_passo$Observação)
 
 library(openxlsx)
 write.xlsx(Quarto_passo, "C:/Users/silva/Downloads/romi_ofice/teste_quarto_passo.xlsx")
