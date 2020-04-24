@@ -11,7 +11,7 @@ com <-Sys.time()# iniciando contagem de tempo
 # Valores a ser alterados
 # ---------------------------- #
 
-# Valores atuais (m?s)
+
 dia_inicio_atual=01
 dia_fim_atual=31
 mes_atual=03
