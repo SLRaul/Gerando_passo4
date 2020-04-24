@@ -2,7 +2,7 @@
 
 rm(list = ls())
 
-com <-Sys.time()# iniciandi contagem de tempo
+com <-Sys.time()# iniciando contagem de tempo
 ## mundando o diret?rio
 #setwd("X:/SGE/GABINETE/CONSELHO NACIONAL DE JUSTICA/JUSTICA EM NUMEROS/JUSTI?A EM N?MEROS_DADOS ANUAIS/JN ANO 2020/Arquivos Provimento 49 de 18_08_2015/Quarto Passo/Gerar quarto passo")
 
