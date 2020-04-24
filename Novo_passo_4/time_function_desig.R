@@ -1,4 +1,4 @@
-#setwd("/home/silva/Downloads/romi_ofice")
+
 
 periodo_trabalhado <- function(data_inicial, data_final, dias_mes, BD_desig ){
   # procurando a fun??o periodo_trabalhado_afastamento
