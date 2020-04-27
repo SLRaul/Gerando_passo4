@@ -287,7 +287,8 @@ dados2 = dados2 %>% select(Junção,nome_magis,nome_serventia_sicond,Junção,
                            SentCCM1º,SentCH1º,SentCSM1º,SentDC1º,SentExH1º,SentExtFisc1º,SentExtNFisc1º,
                            SentHDC1º,SentJud1º)
 
-# Juntando ambos os bancos de dados
+# # # Juntando ambos os bancos de dados # # # 
+# # # se precisar reorganizar o 'Quarto passo' começar aqui # # # 
 Quarto_passo=rbind(dados1,dados2)
 
 #retirando os repetidos
@@ -349,9 +350,18 @@ for (i in 1:nrow(Quarto_passo)) {
 Quarto_passo$nome_serventia_sicond=Converter_em_latin1(Quarto_passo$nome_serventia_sicond)
 Quarto_passo$nome_magis=Converter_em_latin1(Quarto_passo$nome_magis)
 Quarto_passo$Observação=Converter_em_latin1(Quarto_passo$Observação)
+Quarto_passo$`CPF Magistrado` <- as.numeric(paste0(Quarto_passo$`CPF Magistrado`) )
+
+Quarto_passo <- Quarto_passo %>% select(`CPF Magistrado`, `Código Serventia`,
+                                        `Tipo Juiz` ,Mes,
+                                        Ano,`Quantidade dias corridos`,
+                                        Observação,AudConc2º,AudNConc2º,Dec2º,DecDC2º,
+                                        DecH2º,DecHDC2º,DecInt2º,RintJ2º,VotoR2º,AudConc1º,AudNConc1º,DecInt1º,RIntCJ1º,
+                                        SentCCM1º,SentCH1º,SentCSM1º,SentDC1º,SentExH1º,SentExtFisc1º,SentExtNFisc1º,
+                                        SentHDC1º,SentJud1º)
 
 library(openxlsx)
-write.xlsx(Quarto_passo, "C:/Users/silva/Downloads/romi_ofice/teste_quarto_passo.xlsx")
+write.xlsx(Quarto_passo, "C:/Users/silva/Downloads/romi_ofice/teste_quarto_passo.xls")
 
 fim <- Sys.time()
 fim-com
