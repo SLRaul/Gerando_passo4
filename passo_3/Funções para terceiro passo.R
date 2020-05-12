@@ -1,11 +1,12 @@
 
 rm(list = ls())
-mes_atual=03
+mes_atual=04
 ano_atual=2020
 ### Terceiro passo ### 
 library(dplyr)
 library(readxl)
 library(excel.link)
+library(readODS)
 
 # setwd(): Muda o diretºrio
 # getwd(): Mostra o diretºrio
@@ -14,9 +15,9 @@ library(excel.link)
 
 # Buscar Metas
 #setwd("X:/SGE/GABINETE/CONSELHO NACIONAL DE JUSTICA/JUSTICA EM NUMEROS/JUSTIºA EM NºMEROS_DADOS ANUAIS/JN ANO 2020/Arquivos Provimento 49 de 18_08_2015/Terceiro Passo/Gerar terceiro passo")
-setwd("/home/silva/Downloads/romi_ofice/Gerar_passo_3") 
-terceiro_1grau=read_excel("Terceiro passo 1° grau.xls")
-terceiro_2grau=read_excel("Terceiro passo 2° grau.xls")
+setwd("Passo 3") 
+terceiro_1grau=read_ods("Terceiro Passo  1 grau.ods")
+terceiro_2grau=read_ods("Terceiro Passo 2 grau.ods")
 
 # Planilha dos Códigos
 codigos=read_excel("codigos.xls")
@@ -94,7 +95,7 @@ PRedExtFisc1º=verificar(terceiro_1grau,`PREDEXTFISC1º - Processos de execuçã
 PRedRExtFisc1º=verificar(terceiro_1grau,`PREDREXTFISC1º - Processos de execução fiscal no 1º grau recebidos de outra unidade judiciária por motivo de redistribuição`,
                          terceiro_1grau$`PREDREXTFISC1º - Processos de execução fiscal no 1º grau recebidos de outra unidade judiciária por motivo de redistribuição`)
 
-dados1=data.frame(`Órgão Estatística`=terceiro_1grau$`Órgão Estatística`,
+dados1=data.frame(`Órgão Estatística`=terceiro_1grau$Estatística, #`Órgão Estatística`,
                   CartaD1º,
                   CartaN1º,
                   CnC1º,
