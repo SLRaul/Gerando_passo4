@@ -13,10 +13,10 @@ com <-Sys.time()# iniciando contagem de tempo
 
 #valores inicias
 dia_inicio_atual=01
-dia_fim_atual=31
-mes_atual=03
+dia_fim_atual=30
+mes_atual=04
 ano_atual=2020
-nome_mes_atual="Março"
+nome_mes_atual="Abril"
 
 #pacotes utilizados 
 library(dplyr) #manipula??o de dados
@@ -24,8 +24,9 @@ library(readxl) #leitura de arquivo xls
 #library(excel.link) #criando arquivo em excel
 library(lubridate) # manipula??o de datas
 library(stringi)  # manipula??o de strings
+library(readODS) #ler arquivos .ods
 
-setwd("/home/silva/Downloads/romi_ofice/Gerar_passo_4")
+setwd("C:/Users/silva/Downloads/romi_ofice")
 # Planilha dos c?digos de serventia
 # codigos_serventia=read_excel("Codigo_serventia.xls")
 BD_serventias=read_excel("C:/Users/silva/Downloads/romi_ofice/data_base/BD serventias.xls") # Arquivo ?nico
@@ -41,20 +42,21 @@ BD_magistrados=read_excel("C:/Users/silva/Downloads/romi_ofice/data_base/BD magi
 BD_magistrados$nome_magis<-stri_trans_general(BD_magistrados$nome_magis, "Latin-ASCII")  ##
 
 # Banco de dados afastamentos
-BD_afastamentos=read_excel("C:/Users/silva/Downloads/romi_ofice/marc/BD afastamentos.xlsx") # Arquivo mensal
+BD_afastamentos=read_excel("C:/Users/silva/Downloads/romi_ofice/Passo 4/abril/BD afastamentos.xls") # Arquivo mensal
 colnames(BD_afastamentos)=c("nome_magis","inicio_afast","fim_afast","MOTIVO")
 #Retirando os caracteres especiais
 BD_afastamentos$nome_magis<-stri_trans_general(BD_afastamentos$nome_magis, "Latin-ASCII")  ##
 
 # Banco de dados designa??es
-BD_desig=read_excel("C:/Users/silva/Downloads/romi_ofice/marc/BD desig.xlsx") # Arquivo mensal
+BD_desig=read_excel("C:/Users/silva/Downloads/romi_ofice/Passo 4/abril/BD desig.xls") # Arquivo mensal
 colnames(BD_desig)=c("nome_magis","inicio_desig","fim_desig","nome_serventia_desig","Tipo_magis")
 #retirando os caracteres especiais
 BD_desig$nome_magis<-stri_trans_general(BD_desig$nome_magis, "Latin-ASCII")  ##
 BD_desig$nome_serventia_desig <- stri_trans_general(BD_desig$nome_serventia_desig, "Latin-ASCII")
 
 # Buscar metas (Produtividade)
-quarto_1grau=read_excel("C:/Users/silva/Downloads/romi_ofice/marc//Quarto passo 1º grau.xlsx") # Arquivo mensal
+#quarto_1grau=read_excel("C:/Users/silva/Downloads/romi_ofice/Passo 4/abril/Quarto passo 1 grau.xlsx") # Arquivo mensal
+quarto_1grau=read_ods("C:/Users/silva/Downloads/romi_ofice/Passo 4/abril/Quarto passo 1 grau.ods") # Arquivo mensal
 
 
 ## verificar aqui se os dados est?o ok ##
@@ -73,7 +75,9 @@ quarto_1grau=left_join(quarto_1grau,BD_serventias %>% select(codigo_VT,nome_serv
 ############ ajeiteita aqui
 
 
-quarto_2grau=read_excel("C:/Users/silva/Downloads/romi_ofice/marc/Quarto passo 2º grau.xlsx") # Arquivo mensal
+#quarto_2grau=read_excel("C:/Users/silva/Downloads/romi_ofice/Passo 4/abril/Quarto passo 2º grau.xlsx") # Arquivo mensal
+quarto_2grau=read_ods("C:/Users/silva/Downloads/romi_ofice/Passo 4/abril/Quarto passo 2 grau.ods") # Arquivo mensal
+
 colnames(quarto_2grau)[1:2]=c("nome_magis","nome_serventia_sicond")
 #retirando os caracteres especiais
 quarto_2grau$nome_magis<-stri_trans_general(quarto_2grau$nome_magis, "Latin-ASCII")  ##
@@ -82,6 +86,7 @@ quarto_2grau$nome_serventia_sicond<-stri_trans_general(quarto_2grau$nome_servent
 quarto_2grau=left_join(quarto_2grau,BD_magistrados %>% select(CPF_magis,nome_magis))
 # Adicionando coluna codigo_VT em quarto_1grau
 quarto_2grau=left_join(quarto_2grau,BD_serventias %>% select(codigo_VT,nome_serventia_sicond))
+quarto_2grau$codigo_VT[c(2,7,18,33)] <- 78374
 
 # ordenando colunas
 
@@ -89,9 +94,9 @@ quarto_2grau=left_join(quarto_2grau,BD_serventias %>% select(codigo_VT,nome_serv
 # A funÃ§Ã£o time_function_desig entra aqui
 #---------------------------------------------------------------- ----------------#
 source("C:/Users/silva/Documents/Repositorio/Gerando_passos/Novo_passo_4/time_function_desig.R")
-data_inicial <- ("01/03/2020")
-data_final <- dmy("31/03/2020")
-dias_mes <- 31
+data_inicial <- ("01/04/2020")
+data_final <- dmy("30/04/2020")
+dias_mes <- 30
 
 #com <- Sys.time()
 lista <- periodo_trabalhado(data_inicial, data_final, dias_mes, BD_desig)
@@ -208,7 +213,7 @@ dados1$RintJ2º=NA
 dados1$VotoR2º=NA
 
 # Organizando o banco de dados 1º grau
-dados1 = dados1 %>% select(Junção,nome_magis,nome_serventia_sicond,Junção,
+dados1 = dados1 %>% select(Junção,nome_magis,nome_serventia_sicond,
                            CPF_magis,codigo_VT,`Tipo Juiz`,Mes,
                            Ano,`Quantidade dias corridos`,Observação,AudConc2º,AudNConc2º,Dec2º,DecDC2º,
                            DecH2º,DecHDC2º,DecInt2º,RintJ2º,VotoR2º,AudConc1º,AudNConc1º,DecInt1º,RIntCJ1º,
@@ -280,7 +285,7 @@ dados2$Observação=NA
 dados2 = dados2 %>% mutate(Junção=paste(codigo_VT,"-",CPF_magis))
 
 # Organizando o banco de dados 2º grau
-dados2 = dados2 %>% select(Junção,nome_magis,nome_serventia_sicond,Junção,
+dados2 = dados2 %>% select(Junção,nome_magis,nome_serventia_sicond,
                            CPF_magis,codigo_VT,`Tipo Juiz`,Mes,
                            Ano,`Quantidade dias corridos`,Observação,AudConc2º,AudNConc2º,Dec2º,DecDC2º,
                            DecH2º,DecHDC2º,DecInt2º,RintJ2º,VotoR2º,AudConc1º,AudNConc1º,DecInt1º,RIntCJ1º,

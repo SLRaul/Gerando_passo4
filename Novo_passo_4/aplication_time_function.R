@@ -99,6 +99,8 @@ periodo_trabalhado_afastamento <- function(data_entrada, BD_afastamentos, BD_des
       
       for (j in 1:length(data_feriados)) {# removendo os feriados e recessos
         #print(j)
+        if(is.na(periodo_corrente[i]) == T){ #se o proximo indice for vazio sai do la?o
+          break()}
         if(periodo_corrente[i] == data_feriados[j]){
           periodo_corrente <- periodo_corrente[-i]}
         
