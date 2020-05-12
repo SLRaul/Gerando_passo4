@@ -357,7 +357,7 @@ Quarto_passo$nome_magis=Converter_em_latin1(Quarto_passo$nome_magis)
 Quarto_passo$Observação=Converter_em_latin1(Quarto_passo$Observação)
 Quarto_passo$`CPF Magistrado` <- as.numeric(paste0(Quarto_passo$`CPF Magistrado`) )
 
-Quarto_passo <- Quarto_passo %>% select(`CPF Magistrado`, `Código Serventia`,
+Quarto_passo <- Quarto_passo %>% select(`CPF Magistrado`, nome_magis,`Código Serventia`,
                                         `Tipo Juiz` ,Mes,
                                         Ano,`Quantidade dias corridos`,
                                         Observação,AudConc2º,AudNConc2º,Dec2º,DecDC2º,
@@ -366,7 +366,7 @@ Quarto_passo <- Quarto_passo %>% select(`CPF Magistrado`, `Código Serventia`,
                                         SentHDC1º,SentJud1º)
 
 library(openxlsx)
-write.xlsx(Quarto_passo, "C:/Users/silva/Downloads/romi_ofice/teste_quarto_passo.xls")
+write.xlsx(Quarto_passo, "teste_quarto_passo.xlsx")
 
 fim <- Sys.time()
 fim-com
