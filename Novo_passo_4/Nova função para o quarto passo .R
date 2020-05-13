@@ -297,16 +297,16 @@ dados2 = dados2 %>% select(Junção,nome_magis,nome_serventia_sicond,
 Quarto_passo=rbind(dados1,dados2)
 
 #retirando os repetidos
-Quarto_passo <- Quarto_passo %>% distinct(Junção, .keep_all = T)
+#Quarto_passo <- Quarto_passo %>% distinct(Junção, .keep_all = T)
 
 # preparando os dias trabalhados e código_tj
 # aglutinando os dias trabalhados na mesma vt
-info <- aggregate(BD_desig_$tempo_trabalhado,
-                           by= list(BD_desig_$Junção, BD_desig_$codigo_TJ),
-                           FUN= sum)
+# info <- aggregate(BD_desig_$tempo_trabalhado,
+#                            by= list(BD_desig_$Junção, BD_desig_$codigo_TJ),
+#                            FUN= sum)
 colnames(info) <- c("Junção", "codigo_TJ", "dias_desig")
 # acrescentando os dias trabalhados e o código vt
-Quarto_passo <- left_join(Quarto_passo,info)
+Quarto_passo <- left_join(Quarto_passo,BD_desig_ %>% select(Junção, dias_desig = tempo))
 
 #por zero nos dias nao designados
 #Quarto_passo$dias_desig=ifelse(is.na(Quarto_passo$dias_desig),0,Quarto_passo$dias_desig)
