@@ -357,13 +357,16 @@ Quarto_passo$nome_magis=Converter_em_latin1(Quarto_passo$nome_magis)
 Quarto_passo$Observação=Converter_em_latin1(Quarto_passo$Observação)
 Quarto_passo$`CPF Magistrado` <- as.numeric(paste0(Quarto_passo$`CPF Magistrado`) )
 
-Quarto_passo <- Quarto_passo %>% select(`CPF Magistrado`, nome_magis,`Código Serventia`,
-                                        `Tipo Juiz` ,Mes,
-                                        Ano,`Quantidade dias corridos`,
-                                        Observação,AudConc2º,AudNConc2º,Dec2º,DecDC2º,
+Quarto_passo <- Quarto_passo %>% select(`CPF Magistrado`,`Código Serventia`, nome_magis,
+                                        nome_serventia_sicond,`Tipo Juiz` ,Mes,
+                                        Ano,`Quantidade dias corridos`,`Dias de Afastamento`,
+                                        Observação,
+                                        AudConc2º,AudNConc2º,Dec2º,DecDC2º,
                                         DecH2º,DecHDC2º,DecInt2º,RintJ2º,VotoR2º,AudConc1º,AudNConc1º,DecInt1º,RIntCJ1º,
                                         SentCCM1º,SentCH1º,SentCSM1º,SentDC1º,SentExH1º,SentExtFisc1º,SentExtNFisc1º,
                                         SentHDC1º,SentJud1º)
+
+
 
 library(openxlsx)
 write.xlsx(Quarto_passo, "teste_quarto_passo.xlsx")
