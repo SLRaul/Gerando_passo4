@@ -11,9 +11,25 @@ periodo_trabalhado <- function(data_inicial, data_final, dias_mes, BD_desig ){
   BD_afastamentos=BD_afastamentos %>%
     mutate(Descrição=paste0(MOTIVO," DE ",day(inicio_afast),"/",month(inicio_afast),"/",year(inicio_afast),
                             " ATÉ ",day(fim_afast),"/",month(fim_afast),"/",year(fim_afast)))
+  
+  # esse laço deve ficar no periodo_trabalhado_afastamento
+  for (i in 1: nrow(BD_afastamentos)){
+    if(is.na(BD_afastamentos$nome_magis[i+1]) == T){
+      break()
+    }else{
+      if(BD_afastamentos$nome_magis[i] == BD_afastamentos$nome_magis[i+1]){
+        BD_afastamentos$Descrição[i] <- paste0(BD_afastamentos$Descrição[i], " - ", BD_afastamentos$Descrição[i+1])
+        #print(paste0(BD_afastamentos$Descrição[i], " - ", BD_afastamentos$Descrição[i+1]))
+      }
+    }
+  }
+  
+  
   ## organizando o vetor com as descrições de afastamento
   # Agregando as linhas que tem o mesmo magistrado e afastamentos diferentes
   # (criando uma lista nas células com os respectivos motivos dos afastamentos)
+
+  
   BD_afast_paste_motivo=aggregate(BD_afastamentos$Descrição,
                                   by=list(BD_afastamentos$nome_magis),
                                   FUN=paste)
