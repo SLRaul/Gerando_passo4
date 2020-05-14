@@ -7,7 +7,25 @@ periodo_trabalhado_afastamento <- function(data_entrada, BD_afastamentos, BD_des
   library(lubridate)
   
   #gerando um periodo observado
-  periodo_corrente <- as.Date(data_entrada, format= "%d/%m/%Y" ) + days(0:(dias_mes-1)) #data inicial mais 30 dias
+  periodo_corrente <- data_entrada + days(0:(dias_mes-1)) #data inicial mais 30 dias
+  
+  #tranformando em datas
+  BD_afastamentos$inicio_afast <- as.Date(BD_afastamentos$inicio_afast)
+  BD_afastamentos$fim_afast <- as.Date(BD_afastamentos$fim_afast)
+ 
+  
+  # Ajustando os limites
+  for(i in 1:length(BD_afastamentos$inicio_afast)){
+    if(month((BD_afastamentos$inicio_afast[i])) < month(data_entrada)){
+      BD_afastamentos$inicio_afast[i] <- data_entrada
+    }
+    if(year((BD_afastamentos$fim_afast[i])) > year(data_final)){
+      BD_afastamentos$fim_afast[i] <- data_final
+    }
+    if(month((BD_afastamentos$fim_afast[i])) > month(data_final)){
+      BD_afastamentos$fim_afast[i] <- data_final
+    }
+  }
   
   
   #data das f?rias/afastamento
@@ -18,47 +36,40 @@ periodo_trabalhado_afastamento <- function(data_entrada, BD_afastamentos, BD_des
   data_ferias <- interval(inicio_f,fim_f)
   periodo_ferias <- data_ferias/ddays(1)
   
-  #periodo_ferias <- (inicio_f[1]) + days(0:periodo_ferias[1])
-  tempo_trabalhado <- 0
-  for (k in 1:(length(periodo_ferias))) {
+  # organizando o vetor com as descrições de afastamento para cada linha
+  BD_afastamentos=BD_afastamentos %>%
+    mutate(Descrição=paste0(MOTIVO," DE ",day(inicio_afast),"/",month(inicio_afast),"/",year(inicio_afast),
+                            " ATÉ ",day(fim_afast),"/",month(fim_afast),"/",year(fim_afast)))
+  
+   
+  BD_afastamentos$tempo_afastado <- NA
+  BD_afastamentos$tempo_trabalhado <- NA
+  for (i in 1: nrow(BD_afastamentos)){
     
-    periodo_afastado <- (inicio_f[k]) + days(0:periodo_ferias[k]) #k
-    periodo_corrente <- as.Date(data_entrada, format= "%d/%m/%Y" ) + days(0:30) #data inicial mais 30 dias
+    # calculando tempo de férias de cada linha
+    BD_afastamentos$tempo_afastado[i] <- periodo_ferias[i] +1
     
-    
-    for (i in 1:(length(periodo_corrente)) ) {
-      
-      for (l in 1:length(periodo_afastado)) {# removendo as  f?rias # variavel, diferente para cada "afastamento"
-        if(is.na(periodo_corrente[i]) == T){ #se o proximo indice for vazio sai do la?o
-          break()}
-        if(periodo_corrente[i] == periodo_afastado[l]){
-          periodo_corrente <- periodo_corrente[-i]}
-      }
-      
-    }
-    
-    #k=2
-    #verificando se uma pessoa tem mais de um afastamento
-    if(k != 1){#pulando o primeiro
-      if(BD_afastamentos$nome_magis[k] == BD_afastamentos$nome_magis[k-1]){
-        periodo_corrente <- intersect(aux, periodo_corrente)
+    # organizando o vetor com as descrições de afastamento para cada magistrado
+    if(is.na(BD_afastamentos$nome_magis[i+1]) == T){
+      break()
+    }else{
+      if(BD_afastamentos$nome_magis[i] == BD_afastamentos$nome_magis[i+1]){
+        BD_afastamentos$Descrição[i] <- paste0(BD_afastamentos$Descrição[i], " - ", BD_afastamentos$Descrição[i+1])
+        #print(paste0(BD_afastamentos$Descrição[i], " - ", BD_afastamentos$Descrição[i+1]))
       }
     }
-    if( k!=(length(periodo_ferias))){ #pulando o ultimo
-      if(BD_afastamentos$nome_magis[k] == BD_afastamentos$nome_magis[k+1]){
-        aux <- periodo_corrente
-      }    
-    }
-    tempo_trabalhado[k] <- length(periodo_corrente)
-    
   }
-  
-  BD_afastamentos <- cbind(BD_afastamentos, tempo_trabalhado)
-  BD_afastamentos$tempo_afastado <- dias_mes - BD_afastamentos$tempo_trabalhado 
-  
+  # somando as ferias
+  tempo_afastado <- aggregate(BD_afastamentos$tempo_afastado,
+            by=list(BD_afastamentos$nome_magis),
+            FUN=sum)$x
   # retirando os repetidos
-  #BD_afastamentos <- BD_afastamentos %>%  distinct(nome_magis, .keep_all = T)
+  BD_afastamentos <- BD_afastamentos %>%  distinct(nome_magis, .keep_all = T)
+  BD_afastamentos$tempo_afastado <- tempo_afastado
+  # calculando o tempo trabalhado
+  BD_afastamentos$tempo_trabalhado <- dias_mes - BD_afastamentos$tempo_afastado
   
+  BD_afastamentos <- BD_afastamentos %>% select(-MOTIVO )
   return(BD_afastamentos)
 }# a fun??o est? entregando avisos
 

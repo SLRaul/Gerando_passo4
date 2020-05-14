@@ -94,7 +94,7 @@ quarto_2grau$codigo_VT[c(2,7,18,33)] <- 78374
 # A função time_function_desig entra aqui
 #---------------------------------------------------------------- ----------------#
 source("C:/Users/silva/Documents/Repositorio/Gerando_passos/Novo_passo_4/time_function_desig.R")
-data_inicial <- ("01/04/2020")
+data_inicial= data_entrada <- dmy("01/04/2020")
 data_final <- dmy("30/04/2020")
 dias_mes <- 30
 

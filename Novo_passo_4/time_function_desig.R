@@ -7,51 +7,7 @@ periodo_trabalhado <- function(data_inicial, data_final, dias_mes, BD_desig ){
   #colocando o tempo trabalhado dos magistrados afastados
   BD_afastamentos <- periodo_trabalhado_afastamento(data_inicial, BD_afastamentos, BD_desig, dias_mes)
   
-  ## inicio da organização das drescrições
-  BD_afastamentos=BD_afastamentos %>%
-    mutate(Descrição=paste0(MOTIVO," DE ",day(inicio_afast),"/",month(inicio_afast),"/",year(inicio_afast),
-                            " ATÉ ",day(fim_afast),"/",month(fim_afast),"/",year(fim_afast)))
-  
-  # esse laço deve ficar no periodo_trabalhado_afastamento
-  for (i in 1: nrow(BD_afastamentos)){
-    if(is.na(BD_afastamentos$nome_magis[i+1]) == T){
-      break()
-    }else{
-      if(BD_afastamentos$nome_magis[i] == BD_afastamentos$nome_magis[i+1]){
-        BD_afastamentos$Descrição[i] <- paste0(BD_afastamentos$Descrição[i], " - ", BD_afastamentos$Descrição[i+1])
-        #print(paste0(BD_afastamentos$Descrição[i], " - ", BD_afastamentos$Descrição[i+1]))
-      }
-    }
-  }
-  
-  
-  ## organizando o vetor com as descrições de afastamento
-  # Agregando as linhas que tem o mesmo magistrado e afastamentos diferentes
-  # (criando uma lista nas células com os respectivos motivos dos afastamentos)
-
-  
-  BD_afast_paste_motivo=aggregate(BD_afastamentos$Descrição,
-                                  by=list(BD_afastamentos$nome_magis),
-                                  FUN=paste)
-  
-  # Colocando valores que estão como lista em um paste (Descrição)
-  tamanho=0
-  final_descrição=as.character(length(0))
-  for(i in 1:nrow(BD_afast_paste_motivo)){
-    tamanho=length(BD_afast_paste_motivo[,2][[i]])
-    valor1=BD_afast_paste_motivo[,2][[i]][1]
-    if(tamanho>1){
-      for(j in 2:tamanho){
-        valor1=paste(valor1," E ",BD_afast_paste_motivo[,2][[i]][j])
-      }
-    }
-    final_descrição[i]=valor1
-  }
-  colnames(BD_afast_paste_motivo) <-c("nome_magis","Descrição")
-  BD_afastamentos <- (left_join(BD_afastamentos %>% select(-Descrição), BD_afast_paste_motivo))
-  ## inicio da organização das drescrições
-  
-  # colancando o tempo trabalhado de quem teve afastamento
+ # colancando o tempo trabalhado de quem teve afastamento
   BD_desig <- left_join(BD_desig, BD_afastamentos %>% select(nome_magis, tempo_trabalhado))#[,c(1,6)])
   #BD_desig$nome_serventia_desig <- iconv(BD_desig$nome_serventia_desig, from = 'UTF-8', to = 'ASCII//TRANSLIT')
   
@@ -64,6 +20,11 @@ periodo_trabalhado <- function(data_inicial, data_final, dias_mes, BD_desig ){
       BD_desig$fim_desig[i] <- data_final
     }
   }
+  
+  # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
+  # # # # # # #  ajeitar a partir daqui  # # # # # # # 
+  # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
+  
   
   #ajustando os dias para a fun??o
   dias_mes <- dias_mes - 1
