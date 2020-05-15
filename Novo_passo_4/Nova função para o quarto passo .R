@@ -101,12 +101,12 @@ dias_mes <- 30
 #com <- Sys.time()
 lista <- periodo_trabalhado(data_inicial, data_final, dias_mes, BD_desig)
 
-BD_desig_ <- lista$desig
+BD_desig_ <- (lista$desig)
 
 BD_desig_ <- left_join(BD_desig_, BD_magistrados %>% select(-codigo_magis))
 BD_desig_ <- BD_desig_ %>% mutate(Junção=paste(codigo_VT,"-",CPF_magis))
 #retirando os repetidos
-BD_desig_ <- BD_desig_ %>% distinct(Junção,inicio_desig, .keep_all = T)
+BD_desig_ <- (BD_desig_ %>% distinct(Junção,inicio_desig, .keep_all = T))
 
 
 #codigo do tipo de juiz
@@ -117,11 +117,6 @@ BD_Tipo_de_Juiz=data.frame(codigo_TJ,Tipo_magis)
 
 BD_desig_ <- left_join(BD_desig_, BD_Tipo_de_Juiz)
 
-
-#  Quarto_passo <-readRDS("/home/silva/Downloads/romi_ofice/Gerar_passo_4/quarto_passo_mar.RDS")
-# # 
-# Quarto_passo<- left_join(Quarto_passo, BD_desig_[,c(7,9)])
-# Quarto_passo <- left_join(Quarto_passo, lista$afastamento)
 
 
 # --------------------------------------------------------- #
@@ -296,18 +291,16 @@ dados2 = dados2 %>% select(Junção,nome_magis,nome_serventia_sicond,
 # # # se precisar reorganizar o 'Quarto passo' começar aqui # # # 
 Quarto_passo=rbind(dados1,dados2)
 
-#retirando os repetidos
-#Quarto_passo <- Quarto_passo %>% distinct(Junção, .keep_all = T)
-
 # preparando os dias trabalhados e código_tj
 # aglutinando os dias trabalhados na mesma vt
-# info <- aggregate(BD_desig_$tempo_trabalhado,
-#                            by= list(BD_desig_$Junção, BD_desig_$codigo_TJ),
-#                            FUN= sum)
+info <- aggregate(BD_desig_$tempo_trabalhado,
+                  by= list(BD_desig_$Junção, BD_desig_$codigo_TJ),
+                  FUN= sum)
 colnames(info) <- c("Junção", "codigo_TJ", "dias_desig")
-# acrescentando os dias trabalhados e o código vt
-Quarto_passo <- left_join(Quarto_passo,BD_desig_ %>% select(Junção, dias_desig = tempo))
 
+#acrescentando os dias trabalhados e o código vt
+Quarto_passo <- left_join(Quarto_passo,info)
+head(Quarto_passo)
 #por zero nos dias nao designados
 #Quarto_passo$dias_desig=ifelse(is.na(Quarto_passo$dias_desig),0,Quarto_passo$dias_desig)
 
