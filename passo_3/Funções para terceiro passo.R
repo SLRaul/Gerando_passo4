@@ -16,8 +16,9 @@ library(readODS)
 # Buscar Metas
 #setwd("X:/SGE/GABINETE/CONSELHO NACIONAL DE JUSTICA/JUSTICA EM NUMEROS/JUSTIºA EM NºMEROS_DADOS ANUAIS/JN ANO 2020/Arquivos Provimento 49 de 18_08_2015/Terceiro Passo/Gerar terceiro passo")
 setwd("/home/raulls/R_Diretorio/romi-office-trt") 
-terceiro_1grau=read_ods("Terceiro Passo  1 grau.ods")
-terceiro_2grau=read_ods("Terceiro Passo 2 grau.ods")
+setwd("C:/Users/silva/Downloads/romi_ofice/Passo 3")
+terceiro_1grau=read_ods("maio/Terceiro Passo  1 grau.ods")
+terceiro_2grau=read_ods("maio/Terceiro Passo 2 grau.ods")
 
 # Planilha dos Códigos
 codigos=read_excel("codigos.xls")
