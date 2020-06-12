@@ -13,10 +13,10 @@ com <-Sys.time()# iniciando contagem de tempo
 
 #valores inicias
 dia_inicio_atual=01
-dia_fim_atual=30
-mes_atual=04
+dia_fim_atual=31
+mes_atual=05
 ano_atual=2020
-nome_mes_atual="Abril"
+nome_mes_atual="Maio"
 
 #pacotes utilizados 
 library(dplyr) #manipula??o de dados
@@ -42,13 +42,13 @@ BD_magistrados=read_excel("C:/Users/silva/Downloads/romi_ofice/data_base/BD magi
 BD_magistrados$nome_magis<-stri_trans_general(BD_magistrados$nome_magis, "Latin-ASCII")  ##
 
 # Banco de dados afastamentos
-BD_afastamentos=read_excel("C:/Users/silva/Downloads/romi_ofice/Passo 4/abril/BD afastamentos.xls") # Arquivo mensal
+BD_afastamentos=read_excel("C:/Users/silva/Downloads/romi_ofice/Passo 4/maio/BD afastamentos.xls") # Arquivo mensal
 colnames(BD_afastamentos)=c("nome_magis","inicio_afast","fim_afast","MOTIVO")
 #Retirando os caracteres especiais
 BD_afastamentos$nome_magis<-stri_trans_general(BD_afastamentos$nome_magis, "Latin-ASCII")  ##
 
 # Banco de dados designa??es
-BD_desig=read_excel("C:/Users/silva/Downloads/romi_ofice/Passo 4/abril/BD desig.xls") # Arquivo mensal
+BD_desig=read_excel("C:/Users/silva/Downloads/romi_ofice/Passo 4/maio/BD desig.xls") # Arquivo mensal
 colnames(BD_desig)=c("nome_magis","inicio_desig","fim_desig","nome_serventia_desig","Tipo_magis")
 #retirando os caracteres especiais
 BD_desig$nome_magis<-stri_trans_general(BD_desig$nome_magis, "Latin-ASCII")  ##
@@ -86,7 +86,6 @@ quarto_2grau$nome_serventia_sicond<-stri_trans_general(quarto_2grau$nome_servent
 quarto_2grau=left_join(quarto_2grau,BD_magistrados %>% select(CPF_magis,nome_magis))
 # Adicionando coluna codigo_VT em quarto_1grau
 quarto_2grau=left_join(quarto_2grau,BD_serventias %>% select(codigo_VT,nome_serventia_sicond))
-quarto_2grau$codigo_VT[c(2,7,18,33)] <- 78374
 
 # ordenando colunas
 
@@ -94,14 +93,16 @@ quarto_2grau$codigo_VT[c(2,7,18,33)] <- 78374
 # A funÃ§Ã£o time_function_desig entra aqui
 #---------------------------------------------------------------- ----------------#
 source("C:/Users/silva/Documents/Repositorio/Gerando_passos/Novo_passo_4/time_function_desig.R")
-data_inicial= data_entrada <- dmy("01/04/2020")
-data_final <- dmy("30/04/2020")
-dias_mes <- 30
+data_inicial <- dmy("01/05/2020")
+data_final <- dmy("31/05/2020")
+dias_mes <- 31
 
 #com <- Sys.time()
 lista <- periodo_trabalhado(data_inicial, data_final, dias_mes, BD_desig)
 
 BD_desig_ <- (lista$desig)
+
+# BD_desig_$tempo_trabalhado[BD_desig_$tempo_trabalhado == 1] <- 0
 
 BD_desig_ <- left_join(BD_desig_, BD_magistrados %>% select(-codigo_magis))
 BD_desig_ <- BD_desig_ %>% mutate(Junção=paste(codigo_VT,"-",CPF_magis))
@@ -287,6 +288,7 @@ dados2 = dados2 %>% select(Junção,nome_magis,nome_serventia_sicond,
                            SentCCM1º,SentCH1º,SentCSM1º,SentDC1º,SentExH1º,SentExtFisc1º,SentExtNFisc1º,
                            SentHDC1º,SentJud1º)
 
+#dados2$Junção[7] <- "78374 - 3482200300"
 # # # Juntando ambos os bancos de dados # # # 
 # # # se precisar reorganizar o 'Quarto passo' começar aqui # # # 
 Quarto_passo=rbind(dados1,dados2)
@@ -297,6 +299,8 @@ info <- aggregate(BD_desig_$tempo_trabalhado,
                   by= list(BD_desig_$Junção, BD_desig_$codigo_TJ),
                   FUN= sum)
 colnames(info) <- c("Junção", "codigo_TJ", "dias_desig")
+
+
 
 #acrescentando os dias trabalhados e o código vt
 Quarto_passo <- left_join(Quarto_passo,info)
@@ -362,7 +366,7 @@ Quarto_passo <- Quarto_passo %>% select(`CPF Magistrado`,`Código Serventia`, nom
 
 
 library(openxlsx)
-write.xlsx(Quarto_passo, "teste_quarto_passo.xlsx")
+write.xlsx(Quarto_passo, "C:/Users/silva/Downloads/romi_ofice/Passo 4/maio/Quarto_passo_saida_maio.xlsx")
 
 fim <- Sys.time()
 fim-com

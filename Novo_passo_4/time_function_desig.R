@@ -19,6 +19,9 @@ periodo_trabalhado <- function(data_inicial, data_final, dias_mes, BD_desig ){
     if(BD_desig$fim_desig[i] > data_final){
       BD_desig$fim_desig[i] <- data_final
     }
+    if(month(BD_desig$fim_desig[i]) < month(data_final)){
+      BD_desig$fim_desig[i] <- data_inicial
+      }
   }
   
   # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
