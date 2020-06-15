@@ -288,10 +288,13 @@ dados2 = dados2 %>% select(Junção,nome_magis,nome_serventia_sicond,
                            SentCCM1º,SentCH1º,SentCSM1º,SentDC1º,SentExH1º,SentExtFisc1º,SentExtNFisc1º,
                            SentHDC1º,SentJud1º)
 
-#dados2$Junção[7] <- "78374 - 3482200300"
+# dados2$Junção[7] <- "78374 - 3482200300"
 # # # Juntando ambos os bancos de dados # # # 
 # # # se precisar reorganizar o 'Quarto passo' começar aqui # # # 
 Quarto_passo=rbind(dados1,dados2)
+
+
+# # # #  # o proll está aqui # # # # # # # # # ## # # # 
 
 # preparando os dias trabalhados e código_tj
 # aglutinando os dias trabalhados na mesma vt
@@ -300,13 +303,24 @@ info <- aggregate(BD_desig_$tempo_trabalhado,
                   FUN= sum)
 colnames(info) <- c("Junção", "codigo_TJ", "dias_desig")
 
+info$Junção <- as.character(info$Junção)
 
+info_dias <- aggregate(info$dias_desig,
+                  by= list(info$Junção),
+                  FUN= sum)
+colnames(info_dias) <- c("Junção", "dias_desig")
+info <- left_join(info_dias, distinct(info %>% select(Junção,codigo_TJ), Junção, .keep_all=T), by <- "Junção")
+  
+info <- distinct(info, Junção, .keep_all=T)
 
 #acrescentando os dias trabalhados e o código vt
-Quarto_passo <- left_join(Quarto_passo,info)
+Quarto_passo <- left_join(Quarto_passo,info, by = "Junção")
 head(Quarto_passo)
 #por zero nos dias nao designados
 #Quarto_passo$dias_desig=ifelse(is.na(Quarto_passo$dias_desig),0,Quarto_passo$dias_desig)
+
+
+# # # #  # até aqui # # # # # # # # # ## # # # 
 
 # Colocando código 4 para todos os espaços com NA,
 Quarto_passo$codigo_TJ=ifelse(is.na(Quarto_passo$codigo_TJ),4,Quarto_passo$codigo_TJ)
