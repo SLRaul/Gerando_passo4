@@ -288,39 +288,84 @@ dados2 = dados2 %>% select(Junção,nome_magis,nome_serventia_sicond,
                            SentCCM1º,SentCH1º,SentCSM1º,SentDC1º,SentExH1º,SentExtFisc1º,SentExtNFisc1º,
                            SentHDC1º,SentJud1º)
 
-# dados2$Junção[7] <- "78374 - 3482200300"
+ dados2$Junção[7] <- "78374 - 3482200300"
 # # # Juntando ambos os bancos de dados # # # 
 # # # se precisar reorganizar o 'Quarto passo' começar aqui # # # 
 Quarto_passo=rbind(dados1,dados2)
 
 
-# # # #  # o proll está aqui # # # # # # # # # ## # # # 
+# # # #  # colocando  os que estão somente no do quarto passo  # # # # # # # # # ## # # # 
 
 # preparando os dias trabalhados e código_tj
 # aglutinando os dias trabalhados na mesma vt
 info <- aggregate(BD_desig_$tempo_trabalhado,
-                  by= list(BD_desig_$Junção, BD_desig_$codigo_TJ),
+                  by= list(BD_desig_$Junção, BD_desig_$nome_magis,
+                           BD_desig_$nome_serventia_sicond, BD_desig_$CPF_magis, BD_desig_$codigo_VT),
                   FUN= sum)
-colnames(info) <- c("Junção", "codigo_TJ", "dias_desig")
+colnames(info) <- c("Junção","nome_magis","nome_serventia_sicond","CPF_magis","codigo_VT","dias_desig")
 
-info$Junção <- as.character(info$Junção)
-
-info_dias <- aggregate(info$dias_desig,
-                  by= list(info$Junção),
-                  FUN= sum)
-colnames(info_dias) <- c("Junção", "dias_desig")
-info <- left_join(info_dias, distinct(info %>% select(Junção,codigo_TJ), Junção, .keep_all=T), by <- "Junção")
-  
-info <- distinct(info, Junção, .keep_all=T)
 
 #acrescentando os dias trabalhados e o código vt
-Quarto_passo <- left_join(Quarto_passo,info, by = "Junção")
+Quarto_passo <- left_join(Quarto_passo,
+                          info %>% select(Junção, dias_desig),
+                          by = c("Junção"))
 head(Quarto_passo)
+
 #por zero nos dias nao designados
 #Quarto_passo$dias_desig=ifelse(is.na(Quarto_passo$dias_desig),0,Quarto_passo$dias_desig)
 
 
-# # # #  # até aqui # # # # # # # # # ## # # # 
+# # # # # # colocando os que estão em designação e nao no quarto passo # # # # # # # # # # # # # # 
+
+# Adicionando coluna iniciais
+info$`Tipo Juiz`=NA
+info$Mes=mes_atual
+info$Ano=ano_atual
+info$`Quantidade dias corridos` = NA
+info$Observação=NA
+
+# Variáveis do 2º grau
+info$AudConc2º=NA
+info$AudNConc2º=NA
+info$Dec2º=NA
+info$DecDC2º=NA
+info$DecH2º=NA
+info$DecHDC2º=NA
+info$DecInt2º=NA
+info$RintJ2º=NA
+info$VotoR2º=NA
+
+# Variáveis do 1 Grau
+info$AudConc1º=NA
+info$AudNConc1º=NA
+info$DecInt1º=NA
+info$RIntCJ1º=NA
+info$SentCCM1º=NA
+info$SentCH1º=NA
+info$SentCSM1º=NA
+info$SentDC1º=NA
+info$SentExH1º=NA
+info$SentExtFisc1º=NA
+info$SentExtNFisc1º=NA
+info$SentHDC1º=NA
+info$SentJud1º=NA
+
+# ordenando
+info <-  info  %>% select(Junção,nome_magis,nome_serventia_sicond,
+                              CPF_magis,codigo_VT,`Tipo Juiz`,Mes,
+                              Ano,`Quantidade dias corridos`,Observação,AudConc2º,AudNConc2º,Dec2º,DecDC2º,
+                              DecH2º,DecHDC2º,DecInt2º,RintJ2º,VotoR2º,AudConc1º,AudNConc1º,DecInt1º,RIntCJ1º,
+                              SentCCM1º,SentCH1º,SentCSM1º,SentDC1º,SentExH1º,SentExtFisc1º,SentExtNFisc1º,
+                              SentHDC1º,SentJud1º, dias_desig)
+
+Quarto_passo <- rbind(Quarto_passo, info)
+
+Quarto_passo <- Quarto_passo[order(Quarto_passo$nome_magis),]
+
+Quarto_passo <- (Quarto_passo %>% distinct(Junção, .keep_all= T))
+
+#colocando o codigo tj
+Quarto_passo <- distinct(left_join(Quarto_passo, BD_desig_ %>% select(Junção, codigo_TJ)), Junção,.keep_all= T)
 
 # Colocando código 4 para todos os espaços com NA,
 Quarto_passo$codigo_TJ=ifelse(is.na(Quarto_passo$codigo_TJ),4,Quarto_passo$codigo_TJ)
