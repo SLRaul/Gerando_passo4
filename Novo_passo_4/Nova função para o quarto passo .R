@@ -293,27 +293,26 @@ dados2 = dados2 %>% select(Junção,nome_magis,nome_serventia_sicond,
 # # # se precisar reorganizar o 'Quarto passo' começar aqui # # # 
 Quarto_passo=rbind(dados1,dados2)
 
+#colocando o codigo tj
+Quarto_passo <- (left_join(Quarto_passo, BD_desig_ %>% select(Junção, codigo_TJ)))
+
+# Colocando código 4 para todos os espaços com NA,
+Quarto_passo$codigo_TJ=ifelse(is.na(Quarto_passo$codigo_TJ),4,Quarto_passo$codigo_TJ)
 
 # # # #  # colocando  os que estão somente no do quarto passo  # # # # # # # # # ## # # # 
 
 # preparando os dias trabalhados e código_tj
 # aglutinando os dias trabalhados na mesma vt
-info <- aggregate(BD_desig_$tempo_trabalhado,
-                  by= list(BD_desig_$Junção, BD_desig_$nome_magis,
-                           BD_desig_$nome_serventia_sicond, BD_desig_$CPF_magis, BD_desig_$codigo_VT),
-                  FUN= sum)
-colnames(info) <- c("Junção","nome_magis","nome_serventia_sicond","CPF_magis","codigo_VT","dias_desig")
+info <- BD_desig_ %>% select("Junção","nome_magis","codigo_TJ","nome_serventia_sicond","CPF_magis","codigo_VT","dias_desig" = tempo_trabalhado)
+#   aggregate(BD_desig_$tempo_trabalhado,
+#                   by= list(BD_desig_$Junção, BD_desig_$nome_magis,
+#                            BD_desig_$nome_serventia_sicond, BD_desig_$CPF_magis, BD_desig_$codigo_VT),
+#                   FUN= sum)
+# colnames(info) <- c("Junção","nome_magis","nome_serventia_sicond","CPF_magis","codigo_VT","dias_desig")
 
+#colocando os dias desig
 
-#acrescentando os dias trabalhados e o código vt
-Quarto_passo <- left_join(Quarto_passo,
-                          info %>% select(Junção, dias_desig),
-                          by = c("Junção"))
-head(Quarto_passo)
-
-#por zero nos dias nao designados
-#Quarto_passo$dias_desig=ifelse(is.na(Quarto_passo$dias_desig),0,Quarto_passo$dias_desig)
-
+Quarto_passo <- left_join(Quarto_passo, info %>% select("Junção","codigo_TJ","dias_desig"))
 
 # # # # # # colocando os que estão em designação e nao no quarto passo # # # # # # # # # # # # # # 
 
@@ -356,7 +355,7 @@ info <-  info  %>% select(Junção,nome_magis,nome_serventia_sicond,
                               Ano,`Quantidade dias corridos`,Observação,AudConc2º,AudNConc2º,Dec2º,DecDC2º,
                               DecH2º,DecHDC2º,DecInt2º,RintJ2º,VotoR2º,AudConc1º,AudNConc1º,DecInt1º,RIntCJ1º,
                               SentCCM1º,SentCH1º,SentCSM1º,SentDC1º,SentExH1º,SentExtFisc1º,SentExtNFisc1º,
-                              SentHDC1º,SentJud1º, dias_desig)
+                              SentHDC1º,SentJud1º,codigo_TJ,dias_desig)
 
 Quarto_passo <- rbind(Quarto_passo, info)
 
@@ -364,11 +363,7 @@ Quarto_passo <- Quarto_passo[order(Quarto_passo$nome_magis),]
 
 Quarto_passo <- (Quarto_passo %>% distinct(Junção, .keep_all= T))
 
-#colocando o codigo tj
-Quarto_passo <- distinct(left_join(Quarto_passo, BD_desig_ %>% select(Junção, codigo_TJ)), Junção,.keep_all= T)
 
-# Colocando código 4 para todos os espaços com NA,
-Quarto_passo$codigo_TJ=ifelse(is.na(Quarto_passo$codigo_TJ),4,Quarto_passo$codigo_TJ)
 
 
 #colocando os dias de afastamentos e as observações
