@@ -361,7 +361,7 @@ Quarto_passo <- rbind(Quarto_passo, info)
 
 Quarto_passo <- Quarto_passo[order(Quarto_passo$nome_magis),]
 
-Quarto_passo <- (Quarto_passo %>% distinct(Junção, .keep_all= T))
+Quarto_passo <- (Quarto_passo %>% distinct(Junção, codigo_TJ, .keep_all= T))
 
 
 
@@ -370,7 +370,7 @@ Quarto_passo <- (Quarto_passo %>% distinct(Junção, .keep_all= T))
 Quarto_passo <- (left_join(Quarto_passo, lista$afastamento))
 
 #retirando os repetidos
-Quarto_passo <- Quarto_passo %>% distinct(Junção, .keep_all = T)
+# Quarto_passo <- Quarto_passo %>% distinct(Junção, .keep_all = T)
 
 Quarto_passo <- Quarto_passo %>% select(`CPF Magistrado`=CPF_magis,`Código Serventia`=codigo_VT,nome_magis,nome_serventia_sicond,
                                         `Tipo Juiz`=codigo_TJ,Mes,
