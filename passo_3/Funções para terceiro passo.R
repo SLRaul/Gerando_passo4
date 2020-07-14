@@ -1,6 +1,6 @@
 
 rm(list = ls())
-mes_atual=05
+mes_atual=06
 ano_atual=2020
 ### Terceiro passo ### 
 library(dplyr)
@@ -17,8 +17,8 @@ library(readODS)
 #setwd("X:/SGE/GABINETE/CONSELHO NACIONAL DE JUSTICA/JUSTICA EM NUMEROS/JUSTIºA EM NºMEROS_DADOS ANUAIS/JN ANO 2020/Arquivos Provimento 49 de 18_08_2015/Terceiro Passo/Gerar terceiro passo")
 #setwd("/home/raulls/R_Diretorio/romi-office-trt") 
 setwd("C:/Users/silva/Downloads/romi_ofice/Passo 3")
-terceiro_1grau=read_ods("maio/Terceiro Passo  1 grau.ods")
-terceiro_2grau=read_ods("maio/Terceiro Passo 2 grau.ods")
+terceiro_1grau=read_ods("junho/Terceiro Passo 1 grau.ods")
+terceiro_2grau=read_ods("junho/Terceiro Passo 2 grau.ods")
 
 # Planilha dos Códigos
 codigos=read_excel("codigos.xls")
@@ -186,7 +186,7 @@ VPnG2º=verificar(terceiro_2grau,`VPNGNCRIM2º - Vistas pendentes no gabinete em p
                  terceiro_2grau$`VPNGNCRIM2º - Vistas pendentes no gabinete em processos não criminais no 2º grau`)
 
 # Juntando as variºveis
-dados2 = data.frame(terceiro_2grau$Gabinete,
+dados2 = data.frame(terceiro_2grau$`Estatística Gabinete`,
                     CnO2º,
                     CnR2º,
                     Cp2º,
