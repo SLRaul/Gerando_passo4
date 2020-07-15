@@ -48,7 +48,7 @@ verificar=function(BD,coluna,retorno){
 CartaD1º=verificar(terceiro_1grau,`CARTAD1º - Cartas precatórias, de ordem e rogatórias devolvidas`,
                    terceiro_1grau$`CARTAD1º - Cartas precatórias, de ordem e rogatórias devolvidas`)
 CartaN1º=verificar(terceiro_1grau,`CARTAN1º - Cartas precatórias, de ordem e rogatórias que ingressaram no 1º grau`,
-                   terceiro_1grau$`CARTAN1º - Cartas precatórias, de ordem e rogatórias que ingressaram no 1º grau`)
+                   terceiro_1grau$`CARTAN1° - Cartas precatórias, de ordem e rogatórias que ingressaram no 1º grau`)
 CnC1º =verificar(terceiro_1grau,`CNC1º - Casos movos de conhecimento 1º grau`,
                  terceiro_1grau$`CNC1º - Casos movos de conhecimento 1º grau`)
 CpC1º =verificar(terceiro_1grau,`CPC1º - Casos pendentes de conhecimento em 1º grau`,
@@ -98,7 +98,7 @@ PRedRExtFisc1º=verificar(terceiro_1grau,`PREDREXTFISC1º - Processos de execução 
 
 dados1=data.frame(`Órgão Estatística`=terceiro_1grau$`Órgão Estatística`, #`Órgão Estatística`,
                   CartaD1º,
-                  CartaN1º,
+                  CartaN1º = terceiro_1grau$`CARTAN1° - Cartas precatórias, de ordem e rogatórias que ingressaram no 1º grau`,
                   CnC1º,
                   CpC1º,
                   CpExtFisc1º,
