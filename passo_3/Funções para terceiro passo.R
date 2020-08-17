@@ -1,6 +1,6 @@
 
 rm(list = ls())
-mes_atual=06
+mes_atual=07
 ano_atual=2020
 ### Terceiro passo ### 
 library(dplyr)
@@ -17,8 +17,8 @@ library(readODS)
 #setwd("X:/SGE/GABINETE/CONSELHO NACIONAL DE JUSTICA/JUSTICA EM NUMEROS/JUSTIºA EM NºMEROS_DADOS ANUAIS/JN ANO 2020/Arquivos Provimento 49 de 18_08_2015/Terceiro Passo/Gerar terceiro passo")
 #setwd("/home/raulls/R_Diretorio/romi-office-trt") 
 setwd("C:/Users/silva/Downloads/romi_ofice/Passo 3")
-terceiro_1grau=read_ods("junho/Terceiro Passo 1 grau.ods")
-terceiro_2grau=read_ods("junho/Terceiro Passo 2 grau.ods")
+terceiro_1grau=read_ods("julho/Terceiro Passo 1 grau.ods")
+terceiro_2grau=read_ods("julho/Terceiro Passo 2 grau.ods")
 
 # Planilha dos Códigos
 codigos=read_excel("codigos.xls")
@@ -96,7 +96,7 @@ PRedExtFisc1º=verificar(terceiro_1grau,`PREDEXTFISC1º - Processos de execução fi
 PRedRExtFisc1º=verificar(terceiro_1grau,`PREDREXTFISC1º - Processos de execução fiscal no 1º grau recebidos de outra unidade judiciária por motivo de redistribuição`,
                          terceiro_1grau$`PREDREXTFISC1º - Processos de execução fiscal no 1º grau recebidos de outra unidade judiciária por motivo de redistribuição`)
 
-dados1=data.frame(`Órgão Estatística`=terceiro_1grau$`Órgão Estatística`, #`Órgão Estatística`,
+dados1=data.frame(`Órgão Estatística`=terceiro_1grau$Estatística, #`Órgão Estatística`,
                   CartaD1º,
                   CartaN1º = terceiro_1grau$`CARTAN1° - Cartas precatórias, de ordem e rogatórias que ingressaram no 1º grau`,
                   CnC1º,
@@ -186,7 +186,7 @@ VPnG2º=verificar(terceiro_2grau,`VPNGNCRIM2º - Vistas pendentes no gabinete em p
                  terceiro_2grau$`VPNGNCRIM2º - Vistas pendentes no gabinete em processos não criminais no 2º grau`)
 
 # Juntando as variºveis
-dados2 = data.frame(terceiro_2grau$`Estatística Gabinete`,
+dados2 = data.frame(terceiro_2grau$Gabinete,
                     CnO2º,
                     CnR2º,
                     Cp2º,
@@ -246,6 +246,9 @@ dados2 = dados2 %>% select(
   PRedRC1º,PRedRExtFisc1º,PRedRExtNFisc1º,RIntC1º,RIntCP1º,SuSC1º,
   SuSExFisc1º,SuSExNfisc1º,TBaixC1º,TBaixExtFisc1º,TBaixExtNFisc1º,TBaixJud1º)
 
+# codigo que faltou
+dados2$`Código Serventia`[1] <- 78374
+
 # Juntando ambos os bancos de dados
 Terceiro_passo=rbind(dados1,dados2)
 
@@ -275,6 +278,6 @@ Terceiro_passo$`Órgão Estatística`=Converter_em_latin1(Terceiro_passo$`Órgão Est
 #return()
 #}
 
-library(WriteXLS)
-WriteXLS(Terceiro_passo, "terceiro_passo_saida_maio.xls")
+library(openxlsx)
+write.xlsx(Terceiro_passo, "terceiro_passo_saida_julho.xlsx")
 write.csv(Terceiro_passo, "terceiro_passo_saida_maio.csv")
