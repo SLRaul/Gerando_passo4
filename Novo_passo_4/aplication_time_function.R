@@ -71,9 +71,9 @@ periodo_trabalhado_afastamento <- function(data_entrada, BD_afastamentos, BD_des
   
   BD_afastamentos <- BD_afastamentos %>% select(-MOTIVO )
   return(BD_afastamentos)
-}# a fun??o est? entregando avisos
+}
 
-
+# Para eventuais testes
 # data_entrada <- "01/03/2020"
 # dias_mes <- 31
 # periodo_trabalhado_afastamento(data_entrada, BD_afastamentos, BD_desig, dias_mes)

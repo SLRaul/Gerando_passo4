@@ -31,6 +31,8 @@ setwd("C:/Users/silva/Downloads/romi_ofice")
 
 # Planilha dos c?digos de serventia
 # codigos_serventia=read_excel("Codigo_serventia.xls")
+
+# é definido o caminho até o arquivo + o nome do arquivo
 BD_serventias=read_excel("C:/Users/silva/Downloads/romi_ofice/data_base/BD serventias.xls") # Arquivo ?nico
 # retirando os caracteres especias
 BD_serventias$nome_serventia_sicond <- stri_trans_general(BD_serventias$nome_serventia_sicond, "Latin-ASCII")
@@ -95,7 +97,7 @@ quarto_2grau=left_join(quarto_2grau,BD_serventias %>% select(codigo_VT,nome_serv
 #--------------------------------------------------------------------------------#
 # A funÃ§Ã£o time_function_desig entra aqui
 #---------------------------------------------------------------- ----------------#
-# Chamando a função que calcula os dias trabalhados de cada designação
+# Chamando a função que calcula os dias trabalhados de cada designação "time_function_desig.R"
 source("C:/Users/silva/Documents/Repositorio/Gerando_passos/Novo_passo_4/time_function_desig.R")
 # Dados de entrada
 data_inicial <- dmy("01/07/2020")

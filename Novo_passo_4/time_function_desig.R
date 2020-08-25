@@ -43,7 +43,7 @@ periodo_trabalhado <- function(data_inicial, data_final, dias_mes, BD_desig ){
       BD_desig$tempo_trabalhado[i] <- dias_designado[i]
     }
   }
-  #BD_desig$Dias_de_Afastamento <- max(BD_desig$tempo_trabalhado) - BD_desig$tempo_trabalhado
+  # Juntando as tabelas em uma única
   tabela <- list()
   tabela$afastamento <- BD_afastamentos %>% select(nome_magis, Descrição, tempo_afastado) #[,c(1,7)]
   tabela$desig <- left_join(BD_desig, BD_serventias, "nome_serventia_desig") %>%
@@ -52,8 +52,8 @@ periodo_trabalhado <- function(data_inicial, data_final, dias_mes, BD_desig ){
 }
 
 
-
-#data inicial do mes de refer?ncia
+# Para eventuais testes
+# data inicial do mes de refer?ncia
 # data_inicial <- ("01/03/2020")
 # data_final <- dmy("31/03/2020")
 # dias_mes <- 31
