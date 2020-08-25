@@ -1,11 +1,11 @@
 
-rm(list = ls())
+rm(list = ls()) # lipando a memória
+# definindo as datas
 mes_atual=07
 ano_atual=2020
 ### Terceiro passo ### 
 library(dplyr)
 library(readxl)
-#library(excel.link)
 library(readODS)
 
 # setwd(): Muda o diretºrio
@@ -272,12 +272,6 @@ Converter_em_latin1=function(vetor){
 Terceiro_passo$`Órgão Estatística`=Converter_em_latin1(Terceiro_passo$`Órgão Estatística`)
 
 # Passando para excel
-# xls = xl.get.excel()
-# rng = xls[["Activesheet"]]$Cells(1,1)
-# xl.write(Terceiro_passo,rng,row.names = FALSE)
-#return()
-#}
-
 library(openxlsx)
 write.xlsx(Terceiro_passo, "terceiro_passo_saida_julho.xlsx")
 write.csv(Terceiro_passo, "terceiro_passo_saida_maio.csv")
