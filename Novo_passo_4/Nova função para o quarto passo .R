@@ -1,10 +1,10 @@
 
 
-rm(list = ls())
+rm(list = ls()) # Limpa a memória
 
 com <-Sys.time()# iniciando contagem de tempo
 
-## mundando o diret?rio
+## mundando o diretório # quando está no trt
 #setwd("X:/SGE/GABINETE/CONSELHO NACIONAL DE JUSTICA/JUSTICA EM NUMEROS/JUSTI?A EM N?MEROS_DADOS ANUAIS/JN ANO 2020/Arquivos Provimento 49 de 18_08_2015/Quarto Passo/Gerar quarto passo")
 
 # ---------------------------- #
@@ -26,7 +26,9 @@ library(lubridate) # manipula??o de datas
 library(stringi)  # manipula??o de strings
 library(readODS) #ler arquivos .ods
 
+# mudando o diretório
 setwd("C:/Users/silva/Downloads/romi_ofice")
+
 # Planilha dos c?digos de serventia
 # codigos_serventia=read_excel("Codigo_serventia.xls")
 BD_serventias=read_excel("C:/Users/silva/Downloads/romi_ofice/data_base/BD serventias.xls") # Arquivo ?nico
@@ -61,8 +63,9 @@ quarto_1grau=read_ods("C:/Users/silva/Downloads/romi_ofice/Passo 4/julho/Quarto 
 
 ## verificar aqui se os dados est?o ok ##
 
-
+# mudando o nome das duas primeiras colunas
 colnames(quarto_1grau)[1:2]=c("nome_magis","nome_serventia_sicond")
+
 #retirando os caracteres especiais
 quarto_1grau$nome_magis<-stri_trans_general(quarto_1grau$nome_magis, "Latin-ASCII")  ##
 quarto_1grau$nome_serventia_sicond<-stri_trans_general(quarto_1grau$nome_serventia_sicond, "Latin-ASCII") 
@@ -71,10 +74,13 @@ quarto_1grau=left_join(quarto_1grau,BD_magistrados %>% select(nome_magis,CPF_mag
 # Adicionando coluna codigo_VT em quarto_1grau
 quarto_1grau=left_join(quarto_1grau,BD_serventias %>% select(codigo_VT,nome_serventia_sicond))
 
-
+# Buscar metas (Produtividade)
 #quarto_2grau=read_excel("C:/Users/silva/Downloads/romi_ofice/Passo 4/abril/Quarto passo 2º grau.xlsx") # Arquivo mensal
 quarto_2grau=read_ods("C:/Users/silva/Downloads/romi_ofice/Passo 4/julho/Quarto passo 2 grau.ods") # Arquivo mensal
 
+## verificar aqui se os dados est?o ok ##
+
+# mudando o nome das duas primeiras colunas
 colnames(quarto_2grau)[1:2]=c("nome_magis","nome_serventia_sicond")
 #retirando os caracteres especiais
 quarto_2grau$nome_magis<-stri_trans_general(quarto_2grau$nome_magis, "Latin-ASCII")  ##
@@ -84,21 +90,23 @@ quarto_2grau=left_join(quarto_2grau,BD_magistrados %>% select(CPF_magis,nome_mag
 # Adicionando coluna codigo_VT em quarto_1grau
 quarto_2grau=left_join(quarto_2grau,BD_serventias %>% select(codigo_VT,nome_serventia_sicond))
 
+## verificar aqui se os dados est?o ok ##
+
 #--------------------------------------------------------------------------------#
 # A funÃ§Ã£o time_function_desig entra aqui
 #---------------------------------------------------------------- ----------------#
+# Chamando a função que calcula os dias trabalhados de cada designação
 source("C:/Users/silva/Documents/Repositorio/Gerando_passos/Novo_passo_4/time_function_desig.R")
+# Dados de entrada
 data_inicial <- dmy("01/07/2020")
 data_final <- dmy("31/07/2020")
 dias_mes <- 31
 
-#com <- Sys.time()
+# A saida é uma lista com os dados de designação e de afastamento
 lista <- periodo_trabalhado(data_inicial, data_final, dias_mes, BD_desig)
 
+# Renomeando e ajustando os novo dados de deignação
 BD_desig_ <- (lista$desig)
-
-# BD_desig_$tempo_trabalhado[BD_desig_$tempo_trabalhado == 1] <- 0
-
 BD_desig_ <- left_join(BD_desig_, BD_magistrados %>% select(-codigo_magis))
 BD_desig_ <- BD_desig_ %>% mutate(Junção=paste(codigo_VT,"-",CPF_magis))
 #retirando os repetidos
@@ -298,11 +306,6 @@ Quarto_passo$codigo_TJ=ifelse(is.na(Quarto_passo$codigo_TJ),4,Quarto_passo$codig
 # preparando os dias trabalhados e código_tj
 # aglutinando os dias trabalhados na mesma vt
 info <- BD_desig_ %>% select("Junção","nome_magis","codigo_TJ","nome_serventia_sicond","CPF_magis","codigo_VT","dias_desig" = tempo_trabalhado)
-#   aggregate(BD_desig_$tempo_trabalhado,
-#                   by= list(BD_desig_$Junção, BD_desig_$nome_magis,
-#                            BD_desig_$nome_serventia_sicond, BD_desig_$CPF_magis, BD_desig_$codigo_VT),
-#                   FUN= sum)
-# colnames(info) <- c("Junção","nome_magis","nome_serventia_sicond","CPF_magis","codigo_VT","dias_desig")
 
 #colocando os dias desig
 
@@ -360,12 +363,10 @@ Quarto_passo <- (Quarto_passo %>% distinct(Junção, codigo_TJ, .keep_all= T))
 
 
 
-#colocando os dias de afastamentos e as observações
+# colocando os dias de afastamentos e as observações
 Quarto_passo <- (left_join(Quarto_passo, lista$afastamento))
 
-#retirando os repetidos
-# Quarto_passo <- Quarto_passo %>% distinct(Junção, .keep_all = T)
-
+# ordenando as colunas
 Quarto_passo <- Quarto_passo %>% select(`CPF Magistrado`=CPF_magis,`Código Serventia`=codigo_VT,nome_magis,nome_serventia_sicond,
                                         `Tipo Juiz`=codigo_TJ,Mes,
                                         Ano,`Quantidade dias corridos`=dias_desig,
