@@ -111,19 +111,20 @@ lista <- periodo_trabalhado(data_inicial, data_final, dias_mes, BD_desig)
 BD_desig_ <- (lista$desig)
 BD_desig_ <- left_join(BD_desig_, BD_magistrados %>% select(-codigo_magis))
 BD_desig_ <- BD_desig_ %>% mutate(Junção=paste(codigo_VT,"-",CPF_magis))
-#retirando os repetidos
 
-# BD_trabalhado=as_tibble(aggregate(BD_desig_$tempo_trabalhado,by=list(BD_desig_$CPF_magis, BD_desig_$codigo_VT),FUN=sum));colnames(BD_trabalhado)<-c("CPF_magis", "codigo_VT", "tempo")
-# BD_desig_ %>% group_by(CPF_magis,codigo_VT) %>% summarise(tot = sum(tempo_trabalhado))
-# 
-# ddply(BD_desig_, CPF_magis, codigo_VT, .fun=sum(tempo_trabalhado))
-# BD_desig_ <- (BD_desig_ %>% distinct(Junção,inicio_desig, .keep_all = T))
-# 
-# 
-# oi <- BD_desig_ %>% left_join(BD_desig_ %>% select(-tempo_trabalhado), BD_trabalhado, by=c('CPF_magis','codigo_VT'))
-# 
+# somando os dias trabalhados da mesma vt
+BD_trabalhado=as_tibble(aggregate(BD_desig_$tempo_trabalhado,by=list(BD_desig_$Junção),FUN=sum));colnames(BD_trabalhado)<-c("Junção", "tempo")
+# retirando os repetidos
+BD_desig_ <- (BD_desig_ %>% distinct(Junção, .keep_all = T))
+# juntando os dias trabalhados em cada vt com com as desg 
+for (i in 1:nrow(BD_desig_)) {
+  for (j in 1:nrow(BD_trabalhado)) {
+    if(BD_desig_$Junção[i] == BD_trabalhado$Junção[j]){
+      BD_desig_$tempo_trabalhado[i] <- BD_trabalhado$tempo[j]
+    }
+  }
+}
 
-  
 
 #codigo do tipo de juiz
 Tipo_magis=c("Magistrado Titular","Juiz no Exercício da Titularidade",
