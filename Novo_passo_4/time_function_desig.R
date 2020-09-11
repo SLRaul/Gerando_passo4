@@ -19,6 +19,9 @@ periodo_trabalhado <- function(data_inicial, data_final, dias_mes, BD_desig ){
     if(BD_desig$fim_desig[i] > data_final){
       BD_desig$fim_desig[i] <- data_final
     }
+    if(BD_desig$fim_desig[i] < data_inicial){
+      BD_desig$fim_desig[i] <- data_inicial
+    }
 
   }
   
@@ -36,6 +39,7 @@ periodo_trabalhado <- function(data_inicial, data_final, dias_mes, BD_desig ){
   
   data_designado <- interval(inicio_d,fim_d)
   dias_designado <- data_designado/ddays(1) +1
+  
   
   
   for (i in 1:nrow(BD_desig)) {

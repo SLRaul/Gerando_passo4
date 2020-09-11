@@ -14,9 +14,9 @@ com <-Sys.time()# iniciando contagem de tempo
 #valores inicias
 dia_inicio_atual=01
 dia_fim_atual=31
-mes_atual=07
+mes_atual=08
 ano_atual=2020
-nome_mes_atual="Julho"
+nome_mes_atual="Agosto"
 
 #pacotes utilizados 
 library(dplyr) #manipula??o de dados
@@ -46,13 +46,13 @@ BD_magistrados=read_excel("C:/Users/silva/Downloads/romi_ofice/data_base/BD magi
 BD_magistrados$nome_magis<-stri_trans_general(BD_magistrados$nome_magis, "Latin-ASCII")  ##
 
 # Banco de dados afastamentos
-BD_afastamentos=read_excel("C:/Users/silva/Downloads/romi_ofice/Passo 4/julho/BD afastamentos.xls") # Arquivo mensal
+BD_afastamentos=read_excel("C:/Users/silva/Downloads/romi_ofice/Passo 4/agosto/BD afastamentos.xls") # Arquivo mensal
 colnames(BD_afastamentos)=c("nome_magis","inicio_afast","fim_afast","MOTIVO")
 #Retirando os caracteres especiais
 BD_afastamentos$nome_magis<-stri_trans_general(BD_afastamentos$nome_magis, "Latin-ASCII")  ##
 
 # Banco de dados designa??es
-BD_desig=read_excel("C:/Users/silva/Downloads/romi_ofice/Passo 4/julho/BD desig.xlsx") # Arquivo mensal
+BD_desig=read_excel("C:/Users/silva/Downloads/romi_ofice/Passo 4/agosto/BD desig.xls") # Arquivo mensal
 colnames(BD_desig)=c("nome_magis","inicio_desig","fim_desig","nome_serventia_desig","Tipo_magis")
 #retirando os caracteres especiais
 BD_desig$nome_magis<-stri_trans_general(BD_desig$nome_magis, "Latin-ASCII")  ##
@@ -60,7 +60,7 @@ BD_desig$nome_serventia_desig <- stri_trans_general(BD_desig$nome_serventia_desi
 
 # Buscar metas (Produtividade)
 #quarto_1grau=read_excel("C:/Users/silva/Downloads/romi_ofice/Passo 4/abril/Quarto passo 1 grau.xlsx") # Arquivo mensal
-quarto_1grau=read_ods("C:/Users/silva/Downloads/romi_ofice/Passo 4/julho/Quarto passo 1 grau.ods") # Arquivo mensal
+quarto_1grau=read_ods("C:/Users/silva/Downloads/romi_ofice/Passo 4/agosto/Quarto passo 1 grau.ods") # Arquivo mensal
 
 
 ## verificar aqui se os dados est?o ok ##
@@ -78,7 +78,7 @@ quarto_1grau=left_join(quarto_1grau,BD_serventias %>% select(codigo_VT,nome_serv
 
 # Buscar metas (Produtividade)
 #quarto_2grau=read_excel("C:/Users/silva/Downloads/romi_ofice/Passo 4/abril/Quarto passo 2º grau.xlsx") # Arquivo mensal
-quarto_2grau=read_ods("C:/Users/silva/Downloads/romi_ofice/Passo 4/julho/Quarto passo 2 grau.ods") # Arquivo mensal
+quarto_2grau=read_ods("C:/Users/silva/Downloads/romi_ofice/Passo 4/agosto/Quarto passo 2 grau.ods") # Arquivo mensal
 
 ## verificar aqui se os dados est?o ok ##
 
@@ -100,8 +100,8 @@ quarto_2grau=left_join(quarto_2grau,BD_serventias %>% select(codigo_VT,nome_serv
 # Chamando a função que calcula os dias trabalhados de cada designação "time_function_desig.R"
 source("C:/Users/silva/Documents/Repositorio/Gerando_passos/Novo_passo_4/time_function_desig.R")
 # Dados de entrada
-data_inicial <- dmy("01/07/2020")
-data_final <- dmy("31/07/2020")
+data_inicial <- dmy("01/08/2020")
+data_final <- dmy("31/08/2020")
 dias_mes <- 31
 
 # A saida é uma lista com os dados de designação e de afastamento
@@ -112,8 +112,18 @@ BD_desig_ <- (lista$desig)
 BD_desig_ <- left_join(BD_desig_, BD_magistrados %>% select(-codigo_magis))
 BD_desig_ <- BD_desig_ %>% mutate(Junção=paste(codigo_VT,"-",CPF_magis))
 #retirando os repetidos
-BD_desig_ <- (BD_desig_ %>% distinct(Junção,inicio_desig, .keep_all = T))
 
+# BD_trabalhado=as_tibble(aggregate(BD_desig_$tempo_trabalhado,by=list(BD_desig_$CPF_magis, BD_desig_$codigo_VT),FUN=sum));colnames(BD_trabalhado)<-c("CPF_magis", "codigo_VT", "tempo")
+# BD_desig_ %>% group_by(CPF_magis,codigo_VT) %>% summarise(tot = sum(tempo_trabalhado))
+# 
+# ddply(BD_desig_, CPF_magis, codigo_VT, .fun=sum(tempo_trabalhado))
+# BD_desig_ <- (BD_desig_ %>% distinct(Junção,inicio_desig, .keep_all = T))
+# 
+# 
+# oi <- BD_desig_ %>% left_join(BD_desig_ %>% select(-tempo_trabalhado), BD_trabalhado, by=c('CPF_magis','codigo_VT'))
+# 
+
+  
 
 #codigo do tipo de juiz
 Tipo_magis=c("Magistrado Titular","Juiz no Exercício da Titularidade",
@@ -417,7 +427,7 @@ Quarto_passo <- Quarto_passo %>% select(`CPF Magistrado`,`Código Serventia`, nom
 
 
 library(openxlsx)
-write.xlsx(Quarto_passo, "C:/Users/silva/Downloads/romi_ofice/Passo 4/julho/Quarto_passo_saida_julho.xlsx")
+write.xlsx(Quarto_passo, "C:/Users/silva/Downloads/romi_ofice/Passo 4/agosto/Quarto_passo_saida_agosto.xlsx")
 
 fim <- Sys.time()
 fim-com
