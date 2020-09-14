@@ -7,8 +7,9 @@ periodo_trabalhado <- function(data_inicial, data_final, dias_mes, BD_desig ){
   #colocando o tempo trabalhado dos magistrados afastados
   BD_afastamentos <- periodo_trabalhado_afastamento(data_inicial, BD_afastamentos, BD_desig, dias_mes)
   
+  
   # colancando o tempo trabalhado de quem teve afastamento
-  BD_desig <- left_join(BD_desig, BD_afastamentos %>% select(nome_magis, tempo_trabalhado))#[,c(1,6)])
+  #BD_desig <- left_join(BD_desig, BD_afastamentos %>% select(nome_magis, tempo_trabalhado))# dava os dias trabalhados errados quando o mag tinha perídos diferentes
   #BD_desig$nome_serventia_desig <- iconv(BD_desig$nome_serventia_desig, from = 'UTF-8', to = 'ASCII//TRANSLIT')
   
   # Ajustando os limites
@@ -41,12 +42,14 @@ periodo_trabalhado <- function(data_inicial, data_final, dias_mes, BD_desig ){
   dias_designado <- data_designado/ddays(1) +1
   
   
+  #
+  BD_desig$tempo_trabalhado <- dias_designado
   
-  for (i in 1:nrow(BD_desig)) {
-    if(is.na(BD_desig$tempo_trabalhado[i]) == T){
-      BD_desig$tempo_trabalhado[i] <- dias_designado[i]
-    }
-  }
+  # for (i in 1:nrow(BD_desig)) {
+  #   if(is.na(BD_desig$tempo_trabalhado[i]) == T){
+  #     BD_desig$tempo_trabalhado[i] <- dias_designado[i]
+  #   }
+  # }
   # Juntando as tabelas em uma única
   tabela <- list()
   tabela$afastamento <- BD_afastamentos %>% select(nome_magis, Descrição, tempo_afastado) #[,c(1,7)]
@@ -58,8 +61,8 @@ periodo_trabalhado <- function(data_inicial, data_final, dias_mes, BD_desig ){
 
 # Para eventuais testes
 # data inicial do mes de refer?ncia
-# data_inicial <- ("01/03/2020")
-# data_final <- dmy("31/03/2020")
+# data_inicial <- dmy("01/08/2020")
+# data_final <- dmy("31/08/2020")
 # dias_mes <- 31
 # 
 # #o retor ser? em rela??o as dias trabalhados

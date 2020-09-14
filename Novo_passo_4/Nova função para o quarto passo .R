@@ -374,8 +374,6 @@ Quarto_passo <- Quarto_passo[order(Quarto_passo$nome_magis),]
 Quarto_passo <- (Quarto_passo %>% distinct(Junção, codigo_TJ, .keep_all= T))
 
 
-
-
 # colocando os dias de afastamentos e as observações
 Quarto_passo <- (left_join(Quarto_passo, lista$afastamento))
 
@@ -388,6 +386,16 @@ Quarto_passo <- Quarto_passo %>% select(`CPF Magistrado`=CPF_magis,`Código Serve
                                         DecH2º,DecHDC2º,DecInt2º,RintJ2º,VotoR2º,AudConc1º,AudNConc1º,DecInt1º,RIntCJ1º,
                                         SentCCM1º,SentCH1º,SentCSM1º,SentDC1º,SentExH1º,SentExtFisc1º,SentExtNFisc1º,
                                         SentHDC1º,SentJud1º)
+
+# ajustando os dias trabalhados com os dias afastados ...
+for( i in 1:nrow(Quarto_passo)){
+  if(is.na(Quarto_passo$Observação[i]) == F &&
+     is.na(Quarto_passo$`Quantidade dias corridos`[i]) == F &&
+     Quarto_passo$`Quantidade dias corridos`[i] == 31)
+   Quarto_passo$`Quantidade dias corridos`[i] = (Quarto_passo$`Quantidade dias corridos`[i] - Quarto_passo$`Dias de Afastamento`[i])
+}
+
+
 # Criando função que converte um vetor de encoding qualquer para encoding latin1
 # sendo este necessário para vizualização correta no excel
 Converter_em_latin1=function(vetor){
