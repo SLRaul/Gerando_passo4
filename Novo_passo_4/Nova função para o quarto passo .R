@@ -7,16 +7,6 @@ com <-Sys.time()# iniciando contagem de tempo
 ## mundando o diretório # quando está no trt
 #setwd("X:/SGE/GABINETE/CONSELHO NACIONAL DE JUSTICA/JUSTICA EM NUMEROS/JUSTI?A EM N?MEROS_DADOS ANUAIS/JN ANO 2020/Arquivos Provimento 49 de 18_08_2015/Quarto Passo/Gerar quarto passo")
 
-# ---------------------------- #
-# Valores a ser alterados
-# ---------------------------- #
-
-#valores inicias
-dia_inicio_atual=01
-dia_fim_atual=31
-mes_atual=08
-ano_atual=2020
-nome_mes_atual="Agosto"
 
 #pacotes utilizados 
 library(dplyr) #manipula??o de dados
@@ -25,6 +15,17 @@ library(readxl) #leitura de arquivo xls
 library(lubridate) # manipula??o de datas
 library(stringi)  # manipula??o de strings
 library(readODS) #ler arquivos .ods
+
+# ---------------------------- #
+# Valores a ser alterados
+# ---------------------------- #
+
+#valores inicias
+dia_inicio_atual <- dmy("1/8/2020")
+dia_fim_atual <-  dmy("31/8/2020")
+mes_atual <- month(dia_inicio_atual)
+ano_atual <- year(dia_inicio_atual)
+nome_mes_atual <- "Agosto"
 
 # mudando o diretório
 setwd("C:/Users/silva/Downloads/romi_ofice")
@@ -99,10 +100,10 @@ quarto_2grau=left_join(quarto_2grau,BD_serventias %>% select(codigo_VT,nome_serv
 #---------------------------------------------------------------- ----------------#
 # Chamando a função que calcula os dias trabalhados de cada designação "time_function_desig.R"
 source("C:/Users/silva/Documents/Repositorio/Gerando_passos/Novo_passo_4/time_function_desig.R")
-# Dados de entrada
-data_inicial <- dmy("01/08/2020")
-data_final <- dmy("31/08/2020")
-dias_mes <- 31
+# Dados de entrada - renomeados para as funções
+data_inicial <- dia_inicio_atual
+data_final <- dia_fim_atual
+dias_mes <- interval(data_inicial,data_final)/ddays(1) +1
 
 # A saida é uma lista com os dados de designação e de afastamento
 lista <- periodo_trabalhado(data_inicial, data_final, dias_mes, BD_desig)
