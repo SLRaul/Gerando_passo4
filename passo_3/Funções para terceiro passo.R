@@ -1,12 +1,19 @@
 
 rm(list = ls()) # lipando a memória
 # definindo as datas
-mes_atual=08
-ano_atual=2020
+
+
 ### Terceiro passo ### 
 library(dplyr)
 library(readxl)
 library(readODS)
+library(lubridate) # manipula??o de datas
+
+# datas de entrada
+inicio_mes_referencia <- dmy("1/8/2020") #entra com a data inicial do mes de referência
+mes_atual <- month(inicio_mes_referencia) 
+ano_atual <- year(inicio_mes_referencia)
+
 
 # setwd(): Muda o diretºrio
 # getwd(): Mostra o diretºrio
@@ -17,6 +24,10 @@ library(readODS)
 #setwd("X:/SGE/GABINETE/CONSELHO NACIONAL DE JUSTICA/JUSTICA EM NUMEROS/JUSTIºA EM NºMEROS_DADOS ANUAIS/JN ANO 2020/Arquivos Provimento 49 de 18_08_2015/Terceiro Passo/Gerar terceiro passo")
 #setwd("/home/raulls/R_Diretorio/romi-office-trt") 
 setwd("C:/Users/silva/Downloads/romi_ofice/Passo 3")
+# para arquivo em ods
+# terceiro_1grau=read_ods("agosto/Terceiro Passo 1 grau.ods")
+# terceiro_2grau=read_ods("agosto/Terceiro Passo 2 grau.ods")
+# para arquivo em xls/xlsx
 terceiro_1grau=read_ods("agosto/Terceiro Passo 1 grau.ods")
 terceiro_2grau=read_ods("agosto/Terceiro Passo 2 grau.ods")
 
@@ -273,5 +284,5 @@ Terceiro_passo$`Órgão Estatística`=Converter_em_latin1(Terceiro_passo$`Órgão Est
 
 # Passando para excel
 library(openxlsx)
-write.xlsx(Terceiro_passo, "terceiro_passo_saida_agosto.xlsx")
-write.csv(Terceiro_passo, "terceiro_passo_saida_agosto.csv")
+write.xlsx(Terceiro_passo, "terceiro_passo_saida_setembro.xlsx")
+write.csv(Terceiro_passo, "terceiro_passo_saida_setembro.csv")
