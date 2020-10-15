@@ -10,7 +10,7 @@ library(readODS)
 library(lubridate) # manipula??o de datas
 
 # datas de entrada
-inicio_mes_referencia <- dmy("1/8/2020") #entra com a data inicial do mes de referência
+inicio_mes_referencia <- dmy("1/9/2020") #entra com a data inicial do mes de referência
 mes_atual <- month(inicio_mes_referencia) 
 ano_atual <- year(inicio_mes_referencia)
 
@@ -25,11 +25,11 @@ ano_atual <- year(inicio_mes_referencia)
 #setwd("/home/raulls/R_Diretorio/romi-office-trt") 
 setwd("C:/Users/silva/Downloads/romi_ofice/Passo 3")
 # para arquivo em ods
-# terceiro_1grau=read_ods("agosto/Terceiro Passo 1 grau.ods")
-# terceiro_2grau=read_ods("agosto/Terceiro Passo 2 grau.ods")
+# terceiro_1grau=read_ods("mes/Terceiro Passo 1 grau.ods")
+# terceiro_2grau=read_ods("mes/Terceiro Passo 2 grau.ods")
 # para arquivo em xls/xlsx
-terceiro_1grau=read_ods("agosto/Terceiro Passo 1 grau.ods")
-terceiro_2grau=read_ods("agosto/Terceiro Passo 2 grau.ods")
+terceiro_1grau=read_excel("setembro/Terceiro Passo 1 grau.xlsx")
+terceiro_2grau=read_excel("setembro/Terceiro Passo 2 grau.xlsx")
 
 # Planilha dos Códigos
 codigos=read_excel("codigos.xls")
@@ -286,3 +286,4 @@ Terceiro_passo$`Órgão Estatística`=Converter_em_latin1(Terceiro_passo$`Órgão Est
 library(openxlsx)
 write.xlsx(Terceiro_passo, "terceiro_passo_saida_setembro.xlsx")
 write.csv(Terceiro_passo, "terceiro_passo_saida_setembro.csv")
+
