@@ -10,7 +10,7 @@ library(readODS)
 library(lubridate) # manipula??o de datas
 
 # datas de entrada
-inicio_mes_referencia <- dmy("1/9/2020") #entra com a data inicial do mes de referência
+inicio_mes_referencia <- dmy("1/10/2020") #entra com a data inicial do mes de referência
 mes_atual <- month(inicio_mes_referencia) 
 ano_atual <- year(inicio_mes_referencia)
 
@@ -28,8 +28,8 @@ setwd("C:/Users/silva/Downloads/romi_ofice/Passo 3")
 # terceiro_1grau=read_ods("mes/Terceiro Passo 1 grau.ods")
 # terceiro_2grau=read_ods("mes/Terceiro Passo 2 grau.ods")
 # para arquivo em xls/xlsx
-terceiro_1grau=read_excel("setembro/Terceiro Passo 1 grau.xlsx")
-terceiro_2grau=read_excel("setembro/Terceiro Passo 2 grau.xlsx")
+terceiro_1grau=read_excel("outubro/Terceiro Passo 1 grau.xls")
+terceiro_2grau=read_excel("outubro/Terceiro Passo 2 grau.xls")
 
 # Planilha dos Códigos
 codigos=read_excel("codigos.xls")
