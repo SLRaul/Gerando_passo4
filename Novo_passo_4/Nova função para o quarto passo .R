@@ -60,8 +60,8 @@ BD_desig$nome_magis<-stri_trans_general(BD_desig$nome_magis, "Latin-ASCII")  ##
 BD_desig$nome_serventia_desig <- stri_trans_general(BD_desig$nome_serventia_desig, "Latin-ASCII")
 
 # Buscar metas (Produtividade)
-quarto_1grau=read_excel("C:/Users/silva/Downloads/romi_ofice/Passo 4/outubro/Quarto passo 1 grau.xlsx") # Arquivo mensal
-#quarto_1grau=read_ods("C:/Users/silva/Downloads/romi_ofice/Passo 4/setembro/Quarto passo 1 grau.ods") # Arquivo mensal
+#quarto_1grau=read_excel("C:/Users/silva/Downloads/romi_ofice/Passo 4/outubro/Quarto passo 1 grau.xlsx") # Arquivo mensal
+quarto_1grau=read_ods("C:/Users/silva/Downloads/romi_ofice/Passo 4/outubro/Quarto passo 1 grau.ods") # Arquivo mensal
 
 
 ## verificar aqui se os dados est?o ok ##
@@ -78,8 +78,8 @@ quarto_1grau=left_join(quarto_1grau,BD_magistrados %>% select(nome_magis,CPF_mag
 quarto_1grau=left_join(quarto_1grau,BD_serventias %>% select(codigo_VT,nome_serventia_sicond))
 
 # Buscar metas (Produtividade)
-quarto_2grau=read_excel("C:/Users/silva/Downloads/romi_ofice/Passo 4/outubro/Quarto passo 2 grau.xlsx") # Arquivo mensal
-#quarto_2grau=read_ods("C:/Users/silva/Downloads/romi_ofice/Passo 4/setembro/Quarto passo 2 grau.ods") # Arquivo mensal
+#quarto_2grau=read_excel("C:/Users/silva/Downloads/romi_ofice/Passo 4/outubro/Quarto passo 2 grau.xlsx") # Arquivo mensal
+quarto_2grau=read_ods("C:/Users/silva/Downloads/romi_ofice/Passo 4/outubro/Quarto passo 2 grau.ods") # Arquivo mensal
 
 ## verificar aqui se os dados est?o ok ##
 
