@@ -7,7 +7,7 @@ Hollydays <- function(municipio, BD_afastamentos, BD_desig){
   # Importanto o banco de dados de feriados_recesso
   #feriados_recessos <- fread("X:/SGE/GABINETE/CONSELHO NACIONAL DE JUSTICA/JUSTICA EM NUMEROS/JUSTI?A EM N?MEROS_DADOS ANUAIS/JN ANO 2020/Arquivos Provimento 49 de 18_08_2015/Quarto Passo/Gerar quarto passo/Nova fun??o/Feriados_recessos_2020.txt",
    #                          skip = 1, sep = ' ')
-  feriados_recessos <- fread("C:/Users/silva/Downloads/romi_ofice/data_base/Feriados_recessos_2020.txt",
+  feriados_recessos <- fread("D:/romi_ofice/data_base/Feriados_recessos_2020.txt",
                              skip = 1, sep = ' ')
   #retira os cracters especiais
   feriados_recessos$Municipios <- gsub("_", " ", feriados_recessos$Municipios )
