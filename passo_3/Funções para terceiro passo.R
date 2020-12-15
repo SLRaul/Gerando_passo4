@@ -28,8 +28,8 @@ setwd("D:/romi_ofice/Passo 3")
 # terceiro_1grau=read_ods("mes/Terceiro Passo 1 grau.ods")
 # terceiro_2grau=read_ods("mes/Terceiro Passo 2 grau.ods")
 # para arquivo em xls/xlsx
-terceiro_1grau=read_excel("outubro/Terceiro Passo 1 grau.xls")
-terceiro_2grau=read_excel("outubro/Terceiro Passo 2 grau.xls")
+terceiro_1grau=read_excel("novembro/Terceiro Passo 1 grau.xlsx")
+terceiro_2grau=read_excel("novembro/Terceiro Passo 2 grau.xlsx")
 
 # Planilha dos Códigos
 codigos=read_excel("codigos.xls")
@@ -284,6 +284,6 @@ Terceiro_passo$`Órgão Estatística`=Converter_em_latin1(Terceiro_passo$`Órgão Est
 
 # Passando para excel
 library(openxlsx)
-write.xlsx(Terceiro_passo, "terceiro_passo_saida_setembro.xlsx")
-write.csv(Terceiro_passo, "terceiro_passo_saida_setembro.csv")
+write.xlsx(Terceiro_passo, "terceiro_passo_saida_novembro.xlsx")
+write.csv(Terceiro_passo, "terceiro_passo_saida_novembro.csv")
 

@@ -21,11 +21,11 @@ library(readODS) #ler arquivos .ods
 # ---------------------------- #
 
 #valores inicias
-dia_inicio_atual <- dmy("1/10/2020")
-dia_fim_atual <-  dmy("31/10/2020")
+dia_inicio_atual <- dmy("1/11/2020")
+dia_fim_atual <-  dmy("30/11/2020")
 mes_atual <- month(dia_inicio_atual)
 ano_atual <- year(dia_inicio_atual)
-nome_mes_atual <- "Outubro"
+nome_mes_atual <- "Novembro"
 
 # mudando o diretório
 setwd("D:/romi_ofice")
@@ -47,13 +47,13 @@ BD_magistrados=read_excel("D:/romi_ofice/data_base/BD magistrados.xls") # Arquiv
 BD_magistrados$nome_magis<-stri_trans_general(BD_magistrados$nome_magis, "Latin-ASCII")  ##
 
 # Banco de dados afastamentos
-BD_afastamentos=read_excel("D:/romi_ofice/Passo 4/outubro/BD afastamentos.xls") # Arquivo mensal
+BD_afastamentos=read_excel("D:/romi_ofice/Passo 4/novembro/BD afastamentos.xls") # Arquivo mensal
 colnames(BD_afastamentos)=c("nome_magis","inicio_afast","fim_afast","MOTIVO")
 #Retirando os caracteres especiais
 BD_afastamentos$nome_magis<-stri_trans_general(BD_afastamentos$nome_magis, "Latin-ASCII")  ##
 
 # Banco de dados designa??es
-BD_desig=read_excel("D:/romi_ofice/Passo 4/outubro/BD desig.xls") # Arquivo mensal
+BD_desig=read_excel("D:/romi_ofice/Passo 4/novembro/BD desig.xls") # Arquivo mensal
 colnames(BD_desig)=c("nome_magis","inicio_desig","fim_desig","nome_serventia_desig","Tipo_magis")
 #retirando os caracteres especiais
 BD_desig$nome_magis<-stri_trans_general(BD_desig$nome_magis, "Latin-ASCII")  ##
@@ -61,7 +61,7 @@ BD_desig$nome_serventia_desig <- stri_trans_general(BD_desig$nome_serventia_desi
 
 # Buscar metas (Produtividade)
 #quarto_1grau=read_excel("C:/Users/silva/Downloads/romi_ofice/Passo 4/outubro/Quarto passo 1 grau.xlsx") # Arquivo mensal
-quarto_1grau=read_ods("D:/romi_ofice/Passo 4/outubro/Quarto passo 1 grau.ods") # Arquivo mensal
+quarto_1grau=read_ods("D:/romi_ofice/Passo 4/novembro/Quarto passo 1 grau.ods") # Arquivo mensal
 
 
 ## verificar aqui se os dados est?o ok ##
@@ -79,7 +79,7 @@ quarto_1grau=left_join(quarto_1grau,BD_serventias %>% select(codigo_VT,nome_serv
 
 # Buscar metas (Produtividade)
 #quarto_2grau=read_excel("C:/Users/silva/Downloads/romi_ofice/Passo 4/outubro/Quarto passo 2 grau.xlsx") # Arquivo mensal
-quarto_2grau=read_ods("C:/Users/silva/Downloads/romi_ofice/Passo 4/outubro/Quarto passo 2 grau.ods") # Arquivo mensal
+quarto_2grau=read_ods("D:/romi_ofice/Passo 4/novembro/Quarto passo 2 grau.ods") # Arquivo mensal
 
 ## verificar aqui se os dados est?o ok ##
 
@@ -392,7 +392,7 @@ Quarto_passo <- Quarto_passo %>% select(`CPF Magistrado`=CPF_magis,`Código Serve
 for( i in 1:nrow(Quarto_passo)){
   if(is.na(Quarto_passo$Observação[i]) == F &&
      is.na(Quarto_passo$`Quantidade dias corridos`[i]) == F &&
-     Quarto_passo$`Quantidade dias corridos`[i] == 31)
+     Quarto_passo$`Quantidade dias corridos`[i] == dias_mes)
    Quarto_passo$`Quantidade dias corridos`[i] = (Quarto_passo$`Quantidade dias corridos`[i] - Quarto_passo$`Dias de Afastamento`[i])
 }
 
