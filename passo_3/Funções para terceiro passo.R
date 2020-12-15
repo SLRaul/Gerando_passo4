@@ -10,7 +10,7 @@ library(readODS)
 library(lubridate) # manipula??o de datas
 
 # datas de entrada
-inicio_mes_referencia <- dmy("1/10/2020") #entra com a data inicial do mes de referência
+inicio_mes_referencia <- dmy("1/11/2020") #entra com a data inicial do mes de referência
 mes_atual <- month(inicio_mes_referencia) 
 ano_atual <- year(inicio_mes_referencia)
 

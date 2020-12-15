@@ -437,7 +437,7 @@ Quarto_passo <- Quarto_passo %>% select(`CPF Magistrado`,`Código Serventia`, nom
 
 ## ATUALIZA A PASTA DO MES E O NOME DO ARQUIVO ANTES DE RODAR ESSA PARTE ##
 library(openxlsx)
-write.xlsx(Quarto_passo, "D:/romi_ofice/Passo 4/outubro/Quarto_passo_saida_outubro.xlsx")
+write.xlsx(Quarto_passo, "D:/romi_ofice/Passo 4/novembro/Quarto_passo_saida_novembro.xlsx")
 
 fim <- Sys.time()
 fim-com
