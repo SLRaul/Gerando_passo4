@@ -2,6 +2,7 @@ rm(list = ls())
 # read a list of tables and join in one table
 library(dplyr)
 library(readxl)
+library(openxlsx)
 
 # lendo a lista de tabelas e unido-as em uma
 # list.files() -> copia todos os arquivos(do padrão escolhido) da pasta que o caminho leva
