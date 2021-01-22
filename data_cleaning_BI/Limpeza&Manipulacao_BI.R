@@ -38,6 +38,10 @@ Mes <- rep(c(04,08,12,02,01,07,06,05,03,11,10,09), each=37)
 list_table_receb <- cbind(list_table_receb, Mes )
 
 list_table_receb <- list_table_receb %>% select(-UF, -`Número do Orgão (Estatística)`, -`Data da última remessa`)
+list_table_receb$`Casos Novos por Distribuição(%)` <- list_table_receb$`Casos Novos por Distribuição(%)`*100
+list_table_receb$`Redistribuídos(%)` <- list_table_receb$`Redistribuídos(%)`*100
+list_table_receb$`Sentença reformada ou anulada(%)` <- list_table_receb$`Sentença reformada ou anulada(%)`*100
+list_table_receb$`Total(%)` <- list_table_receb$`Total(%)`*100
 
 write.xlsx(list_table_receb, "D:/romi_ofice/BI/TrabalhoNovoBI/list_table_receb.xlsx")
 
