@@ -1,5 +1,4 @@
 
-
 rm(list = ls()) # Limpa a memória
 
 com <-Sys.time()# iniciando contagem de tempo
