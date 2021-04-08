@@ -1,4 +1,4 @@
-# Gerando_passos
+# Passo 4
 A pasta "Novo_passo4" contem quatro funções, em que juntas,calculam os dias trabalhados com restrição de feriados municipais.
 Com a atualização de maio foi retirado a função "Hollydays" visto que os dias trabalhados eram referentes apenas em relação as designações, sendo diminuidas apenas quando o magistrado possui periodo de férias.
 
