@@ -10,7 +10,6 @@ com <-Sys.time()# iniciando contagem de tempo
 #pacotes utilizados 
 library(dplyr) #manipula??o de dados
 library(readxl) #leitura de arquivo xls
-#library(excel.link) #criando arquivo em excel
 library(lubridate) # manipula??o de datas
 library(stringi)  # manipula??o de strings
 library(readODS) #ler arquivos .ods
@@ -46,21 +45,21 @@ BD_magistrados=read_excel("D:/romi_ofice/data_base/BD magistrados.xls") # Arquiv
 BD_magistrados$nome_magis<-stri_trans_general(BD_magistrados$nome_magis, "Latin-ASCII")  ##
 
 # Banco de dados afastamentos
-BD_afastamentos=read_excel("D:/romi_ofice/Passo 4/2021/fevereiro/BD afastamentos.xls") # Arquivo mensal
+BD_afastamentos=read_excel("D:/romi_ofice/Passo 4/2021/março/BD afastamentos.xls") # Arquivo mensal
 colnames(BD_afastamentos)=c("nome_magis","inicio_afast","fim_afast","MOTIVO")
 #Retirando os caracteres especiais
 BD_afastamentos$nome_magis<-stri_trans_general(BD_afastamentos$nome_magis, "Latin-ASCII")  ##
 
 # Banco de dados designa??es
-BD_desig=read_excel("D:/romi_ofice/Passo 4/2021/fevereiro/BD desig.xls") # Arquivo mensal
+BD_desig=read_excel("D:/romi_ofice/Passo 4/2021/março/BD desig.xls") # Arquivo mensal
 colnames(BD_desig)=c("nome_magis","inicio_desig","fim_desig","nome_serventia_desig","Tipo_magis")
 #retirando os caracteres especiais
 BD_desig$nome_magis<-stri_trans_general(BD_desig$nome_magis, "Latin-ASCII")  ##
 BD_desig$nome_serventia_desig <- stri_trans_general(BD_desig$nome_serventia_desig, "Latin-ASCII")
 
 # Buscar metas (Produtividade)
-quarto_1grau=read_excel("D:/romi_ofice/Passo 4/2021/fevereiro/Quarto passo 1 grau.xls") # Arquivo mensal
-# quarto_1grau=read_ods("D:/romi_ofice/Passo 4/2021/fevereiro/Quarto passo 1 grau.ods") # Arquivo mensal
+# quarto_1grau=read_excel("D:/romi_ofice/Passo 4/2021/fevereiro/Quarto passo 1 grau.xls") # Arquivo mensal
+quarto_1grau=read_ods("D:/romi_ofice/Passo 4/2021/março/Quarto passo 1 grau.ods") # Arquivo mensal
 
 
 ## verificar aqui se os dados est?o ok ##
@@ -77,8 +76,8 @@ quarto_1grau=left_join(quarto_1grau,BD_magistrados %>% select(nome_magis,CPF_mag
 quarto_1grau=left_join(quarto_1grau,BD_serventias %>% select(codigo_VT,nome_serventia_sicond))
 
 # Buscar metas (Produtividade)
-quarto_2grau=read_excel("D:/romi_ofice/Passo 4/2021/fevereiro/Quarto passo 2 grau.xls") # Arquivo mensal
-# quarto_2grau=read_ods("D:/romi_ofice/Passo 4/2021/fevereiro/Quarto passo 2 grau.ods") # Arquivo mensal
+# quarto_2grau=read_excel("D:/romi_ofice/Passo 4/2021/fevereiro/Quarto passo 2 grau.xls") # Arquivo mensal
+quarto_2grau=read_ods("D:/romi_ofice/Passo 4/2021/março/Quarto passo 2 grau.ods") # Arquivo mensal
 
 ## verificar aqui se os dados est?o ok ##
 
@@ -435,7 +434,7 @@ Quarto_passo <- Quarto_passo %>% select(`CPF Magistrado`,`Código Serventia`, nom
 
 ## ATUALIZA A PASTA DO MES E O NOME DO ARQUIVO ANTES DE RODAR ESSA PARTE ##
 library(openxlsx)
-write.xlsx(Quarto_passo, "D:/romi_ofice/Passo 4/2021/fevereiro/Quarto_passo_saida_fevereiro.xlsx")
+write.xlsx(Quarto_passo, "D:/romi_ofice/Passo 4/2021/março/Quarto_passo_saida_março.xlsx")
 
 fim <- Sys.time()
 fim-com
