@@ -20,11 +20,11 @@ library(readODS) #ler arquivos .ods
 # ---------------------------- #
 
 #valores inicias
-dia_inicio_atual <- dmy("1/02/2021")
-dia_fim_atual <-  dmy("28/02/2021")
+dia_inicio_atual <- dmy("1/03/2021")
+dia_fim_atual <-  dmy("31/03/2021")
 mes_atual <- month(dia_inicio_atual)
 ano_atual <- year(dia_inicio_atual)
-nome_mes_atual <- "Fevereiro"
+nome_mes_atual <- "Março"
 
 # mudando o diretório
 setwd("D:/romi_ofice")

@@ -10,7 +10,7 @@ library(readODS)
 library(lubridate) # manipula??o de datas
 
 # datas de entrada
-inicio_mes_referencia <- dmy("1/02/2021") # entra com a data inicial do mes de referência
+inicio_mes_referencia <- dmy("1/03/2021") # entra com a data inicial do mes de referência
 mes_atual <- month(inicio_mes_referencia) 
 ano_atual <- year(inicio_mes_referencia)
 
@@ -25,11 +25,11 @@ ano_atual <- year(inicio_mes_referencia)
 #setwd("/home/raulls/R_Diretorio/romi-office-trt") 
 setwd("D:/romi_ofice/Passo 3")
 # para arquivo em ods
-# terceiro_1grau=read_ods("2021/janeiro/Terceiro Passo 1 grau.ods")
-# terceiro_2grau=read_ods("2021/janeiro/Terceiro Passo 2 grau.ods")
+terceiro_1grau=read_ods("2021/março/Terceiro Passo 1 grau.ods")
+terceiro_2grau=read_ods("2021/março/Terceiro Passo 2 grau.ods")
 # para arquivo em xls/xlsx
-terceiro_1grau=read_excel("2021/fevereiro/Terceiro Passo 1 grau.xls")
-terceiro_2grau=read_excel("2021/fevereiro/Terceiro Passo 2 grau.xls")
+# terceiro_1grau=read_excel("2021/março/Terceiro Passo 1 grau.xls")
+# terceiro_2grau=read_excel("2021/março/Terceiro Passo 2 grau.xls")
 
 # Planilha dos Códigos
 codigos=read_excel("codigos.xls")
@@ -284,6 +284,6 @@ Terceiro_passo$`Órgão Estatística`=Converter_em_latin1(Terceiro_passo$`Órgão Est
 
 # Passando para excel
 library(openxlsx)
-write.xlsx(Terceiro_passo, "2021/fevereiro/terceiro_passo_saida_fevereiro.xlsx")
-write.csv(Terceiro_passo, "2021/fevereiro/terceiro_passo_saida_fevereiro.csv", na = "")
+write.xlsx(Terceiro_passo, "2021/março/terceiro_passo_saida_março.xlsx")
+write.csv(Terceiro_passo, "2021/março/terceiro_passo_saida_março.csv", na = "")
 
