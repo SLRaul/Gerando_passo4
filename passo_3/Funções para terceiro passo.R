@@ -68,10 +68,10 @@ CpExtFisc1º =verificar(terceiro_1grau,`CPEXTFISC1º - Casos pendentes de execução
                        terceiro_1grau$`CPEXTFISC1º - Casos pendentes de execução fiscal no 1º grau`)
 CpExtNFisc1º =verificar(terceiro_1grau,`CPEXTNFISC1º - Casos pendentes de execução de título extrajudicial no 1º grau, exceto execuções fiscais`,
                         terceiro_1grau$`CPEXTNFISC1º - Casos pendentes de execução de título extrajudicial no 1º grau, exceto execuções fiscais`)
-ExeJud1º =verificar(terceiro_1grau,`EXEJUD1º - execuções judiciais no 1º grau`,
-                    terceiro_1grau$`EXEJUD1º - execuções judiciais no 1º grau`)
-ExeJudP1º =verificar(terceiro_1grau, `EXEJUDP1º - execuções judiciais pendentes no 1º grau`,
-                     terceiro_1grau$`EXEJUDP1º - execuções judiciais pendentes no 1º grau`)
+ExeJud1º =verificar(terceiro_1grau,`EXEJUD1º - Execuções judiciais no 1º grau`,
+                    terceiro_1grau$`EXEJUD1º - Execuções judiciais no 1º grau`)
+ExeJudP1º =verificar(terceiro_1grau,`EXEJUDP1º - Execuções judiciais pendentes no 1º grau`,
+                     terceiro_1grau$`EXEJUDP1º - Execuções judiciais pendentes no 1º grau`)
 PRedC1º =verificar(terceiro_1grau,`PREDC1º - Processos de conhecimento no 1º grau encaminhados a outra unidade judiciária por motivo de redistribuição`,
                    terceiro_1grau$`PREDC1º - Processos de conhecimento no 1º grau encaminhados a outra unidade judiciária por motivo de redistribuição`)
 PRedRC1º=verificar(terceiro_1grau,`PREDRC1º - Processos de conhecimento no 1º grau recebidos de outra unidade judiciária por motivo de redistribuição`,
