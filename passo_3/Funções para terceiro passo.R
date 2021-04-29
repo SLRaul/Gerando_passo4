@@ -58,7 +58,7 @@ verificar=function(BD,coluna,retorno){
 # Variºveis do Quarto passo 1º grau
 CartaD1º=verificar(terceiro_1grau,`CARTAD1º - Cartas precatórias, de ordem e rogatórias devolvidas`,
                    terceiro_1grau$`CARTAD1º - Cartas precatórias, de ordem e rogatórias devolvidas`)
-CartaN1º=verificar(terceiro_1grau,`CARTAN1º - Cartas precatórias, de ordem e rogatórias que ingressaram no 1º grau`,
+CartaN1º=verificar(terceiro_1grau,`CARTAN1° - Cartas precatórias, de ordem e rogatórias que ingressaram no 1º grau`,
                    terceiro_1grau$`CARTAN1° - Cartas precatórias, de ordem e rogatórias que ingressaram no 1º grau`)
 CnC1º =verificar(terceiro_1grau,`CNC1º - Casos movos de conhecimento 1º grau`,
                  terceiro_1grau$`CNC1º - Casos movos de conhecimento 1º grau`)
@@ -78,10 +78,10 @@ PRedRC1º=verificar(terceiro_1grau,`PREDRC1º - Processos de conhecimento no 1º gr
                    terceiro_1grau$`PREDRC1º - Processos de conhecimento no 1º grau recebidos de outra unidade judiciária por motivo de redistribuição`)
 SuSC1º =verificar(terceiro_1grau,`SUSC1º - Processos de conhecimento suspensos ou sobrestados ou em arquivo provisório no 1º grau`,
                   terceiro_1grau$`SUSC1º - Processos de conhecimento suspensos ou sobrestados ou em arquivo provisório no 1º grau`)
-SuSExFisc1º =verificar(terceiro_1grau,`SUSEXFISC1º - execuções fiscais suspensas ou sobrestadas ou em arquivo provisório`,
-                       terceiro_1grau$`SUSEXFISC1º - execuções fiscais suspensas ou sobrestadas ou em arquivo provisório`)
-SuSExNfisc1º =verificar(terceiro_1grau,`SUSEXNFISC1º - execuções judiciais e extrajudiciais suspensas ou sobrestadas ou em arquivo provisório, exceto execuções fiscais`,
-                        terceiro_1grau$`SUSEXNFISC1º - execuções judiciais e extrajudiciais suspensas ou sobrestadas ou em arquivo provisório, exceto execuções fiscais`)
+SuSExFisc1º =verificar(terceiro_1grau,`SUSEXFISC1º - Execuções fiscais suspensas ou sobrestadas ou em arquivo provisório`,
+                       terceiro_1grau$`SUSEXFISC1º - Execuções fiscais suspensas ou sobrestadas ou em arquivo provisório`)
+SuSExNfisc1º =verificar(terceiro_1grau,`SUSEXNFISC1º - Execuções judiciais e extrajudiciais suspensas ou sobrestadas ou em arquivo provisório, exceto execuções fiscais`,
+                        terceiro_1grau$`SUSEXNFISC1º - Execuções judiciais e extrajudiciais suspensas ou sobrestadas ou em arquivo provisório, exceto execuções fiscais`)
 TBaixC1º =verificar(terceiro_1grau,`TBAIXC1º - Processos de conhecimento baixados no 1º grau`,
                     terceiro_1grau$`TBAIXC1º - Processos de conhecimento baixados no 1º grau`)
 TBaixExtFisc1º =verificar(terceiro_1grau,`TBAIXEXTFISC1º - Total de processos baixados de execução fiscal no 1º grau`,
@@ -283,7 +283,10 @@ Converter_em_latin1=function(vetor){
 Terceiro_passo$`Órgão Estatística`=Converter_em_latin1(Terceiro_passo$`Órgão Estatística`)
 
 # Passando para excel
+
+write.csv(Terceiro_passo, "2021/março/terceiro_passo_saida_mar.csv", na = "")
 library(openxlsx)
-write.xlsx(Terceiro_passo, "2021/março/terceiro_passo_saida_março.xlsx")
-write.csv(Terceiro_passo, "2021/março/terceiro_passo_saida_março.csv", na = "")
+write.xlsx(Terceiro_passo, "2021/março/terceiro_passo_saida_mar.xls")
+# library(WriteXLS)
+# WriteXLS(Terceiro_passo, "2021/janeiro/terceiro_passo_saida_março.xlsx")
 
